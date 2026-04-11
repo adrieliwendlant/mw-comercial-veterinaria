@@ -510,7 +510,7 @@ function HomePage({ navigate }) {
             A parceira estratégica<br/>do seu <span style={{ color:t.teal }}>estabelecimento veterinário</span>
           </h1>
           <p className="fu" style={{ fontSize:'clamp(16px,2vw,19px)',lineHeight:1.55,color:t.mistSoft,maxWidth:'640px',margin:'0 auto 40px',animationDelay:'160ms' }}>
-            Há mais de 40 anos distribuindo as linhas Zoetis de animais de companhia no interior do Rio Grande do Sul e Urano para todo o estado, com agilidade e suporte técnico especializado.
+            Há mais de 40 anos distribuindo produtos veterinários com agilidade, qualidade e suporte técnico especializado para o Rio Grande do Sul.
           </p>
           <div className="fu" style={{ display:'flex',gap:'12px',justifyContent:'center',flexWrap:'wrap',animationDelay:'240ms' }}>
             <PrimaryBtn onClick={() => navigate('contact')}>Solicitar Contato</PrimaryBtn>
@@ -741,7 +741,7 @@ function AboutPage({ navigate }) {
               Estamos há <strong style={{ color:t.teal }}>mais de 40 anos</strong> no mercado veterinário, e ao longo da nossa história fomos lapidando nosso método de trabalho. Desde o armazenamento dos medicamentos até o atendimento, somos referência no Estado.
             </p>
             <p style={{ fontSize:'17px',color:t.mist,lineHeight:1.7,marginBottom:'32px' }}>
-              Nosso objetivo principal é desenvolver o mercado veterinário e, com isso, melhorar a qualidade de vida dos pets. Distribuímos as linhas <strong style={{ color:t.teal }}>Zoetis</strong> e <strong style={{ color:t.teal }}>Urano</strong> para todo o Rio Grande do Sul.
+              Nosso objetivo principal é desenvolver o mercado veterinário e, com isso, melhorar a qualidade de vida dos pets. Distribuímos a linha de animais de companhia da <strong style={{ color:t.teal }}>Zoetis</strong> para o interior do Rio Grande do Sul e <strong style={{ color:t.teal }}>Urano</strong> para todo o Rio Grande do Sul.
             </p>
             <PrimaryBtn onClick={() => navigate('contact')}>Fale Conosco</PrimaryBtn>
           </div>
