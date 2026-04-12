@@ -495,7 +495,7 @@ function HomePage({ navigate }) {
         <video autoPlay loop muted playsInline
           style={{ position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 30%',zIndex:0,opacity:0.25 }}
         >
-          <source src="/images/videoequipe.mp4" type="video/mp4" />
+          <source src={process.env.PUBLIC_URL+'/images/videoequipe.mp4'} type="video/mp4" />
         </video>
         {/* Overlay */}
         <div style={{ position:'absolute',inset:0,zIndex:1,background:`linear-gradient(180deg,${t.obsidian}bb 0%,${t.obsidian}88 50%,${t.obsidian}bb 100%)` }} />
