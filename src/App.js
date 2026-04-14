@@ -78,6 +78,7 @@ const IMG = {
     dexdomitor:                  process.env.PUBLIC_URL+'/images/produtos/dexdomitor.jpg',
     antisedan:                   process.env.PUBLIC_URL+'/images/produtos/Antisedan.jpg',
     telazol:                     process.env.PUBLIC_URL+'/images/produtos/telazol.jpg',
+    librela:                     process.env.PUBLIC_URL+'/images/produtos/librela.jpg',
     convenia:                    process.env.PUBLIC_URL+'/images/produtos/convenia.jpg',
     uranotest_leish:             process.env.PUBLIC_URL+'/images/produtos/uranotest-leishmaniose.jpg',
     uranotest_ehrlichia:         process.env.PUBLIC_URL+'/images/produtos/uranotest-ehrlichia.jpg',
@@ -116,7 +117,11 @@ const IMG = {
     messias:     process.env.PUBLIC_URL+'/images/team/messias.jpg',
     newton:      process.env.PUBLIC_URL+'/images/team/newton.jpg',
     sabrina:     process.env.PUBLIC_URL+'/images/team/sabrina.jpg',
-    virginia:    process.env.PUBLIC_URL+'/images/team/virginia.jpg',
+    virginia:        process.env.PUBLIC_URL+'/images/team/virginia.jpg',
+    claudia_machado: process.env.PUBLIC_URL+'/images/team/claudia-machado.jpg',
+    jeferson:        process.env.PUBLIC_URL+'/images/team/jeferson.jpg',
+    rafael:          process.env.PUBLIC_URL+'/images/team/rafael.jpg',
+    vinicius:        process.env.PUBLIC_URL+'/images/team/vinicius.jpg',
   },
 
   // 4 posts do Instagram (quadrados, 400x400px recomendado)
@@ -181,7 +186,7 @@ const PRODUCTS = [
   { id:19, name:'Rimadyl® Comprimidos',         brand:'Zoetis', cat:'pain',       sp:['dog'],       img:'rimadyl_comp',            desc:'Anti-inflamatório oral à base de carprofeno para alívio de dor e inflamação.',                                                  link:`${BASE}/caes/dor-e-inflamacao/rimadyl/` },
   { id:20, name:'Rimadyl® Injetável',           brand:'Zoetis', cat:'pain',       sp:['dog'],       img:'rimadyl_inj',             desc:'Anti-inflamatório injetável à base de carprofeno para dor peri-operatória.',                                                    link:`${BASE}/caes/dor-e-inflamacao/rimadyl/` },
   { id:21, name:'Trocoxil®',                    brand:'Zoetis', cat:'pain',       sp:['dog'],       img:'trocoxil',                desc:'Anti-inflamatório mavacoxib para tratamento da dor em doença articular.',                                                       link:`${BASE}/caes/dor-e-inflamacao/trocoxil/` },
-  { id:22, name:'Librela®',                     brand:'Zoetis', cat:'pain',       sp:['dog'],       img:null,                      desc:'Terapia com anticorpos monoclonais para controle da dor da osteoartrite canina.',                                               link:`${BASE}/caes/dor-e-inflamacao/librela/` },
+  { id:22, name:'Librela®',                     brand:'Zoetis', cat:'pain',       sp:['dog'],       img:'librela',                      desc:'Terapia com anticorpos monoclonais para controle da dor da osteoartrite canina.',                                               link:`${BASE}/caes/dor-e-inflamacao/librela/` },
   { id:23, name:'Solensia®',                    brand:'Zoetis', cat:'pain',       sp:['cat'],       img:'solensia',                desc:'Primeiro anticorpo monoclonal para gatos, controle da dor da osteoartrite felina.',                                             link:`${BASE}/gatos/dor-e-inflamacao/solensia/` },
   { id:24, name:'Dexdomitor®',                  brand:'Zoetis', cat:'anest',      sp:['dog','cat'], img:'dexdomitor',              desc:'Sedativo e analgésico à base de dexmedetomidina.',                                                                              link:`${BASE}/caes/anestesia-e-sedacao/dexdomitor/` },
   { id:25, name:'Antisedan®',                   brand:'Zoetis', cat:'anest',      sp:['dog','cat'], img:'antisedan',               desc:'Reversor de medetomidina e dexmedetomidina.',                                                                                   link:`${BASE}/caes/anestesia-e-sedacao/antisedan/` },
@@ -223,6 +228,10 @@ const TEAM = [
   { id:19, name:'Sabrina Lopes de Oliveira',   role:'Representante Comercial',tier:'reps',         region:'Região de Bagé / Santana do Livramento',phone:'(55) 9 9654-9020', initials:'SO', photo: IMG.team.sabrina },
   { id:20, name:'Virginia Bensch Raffaelli',   role:'Representante Comercial',tier:'reps',         region:'Região de Ijuí',                       phone:'(41) 9 9616-3928', initials:'VR', photo: IMG.team.virginia },
   { id:21, name:'Gabrieli Proença',            role:'Estagiária Curricular',  tier:'interns',      region:'Região de Passo Fundo',                phone:'(54) 9 9162-6817', initials:'GP', photo: IMG.team.gabrieli },
+  { id:22, name:'Claudia Machado',        role:'Administrativo / Financeiro', tier:'internal', region:null, phone:null, initials:'CM', photo: IMG.team.claudia_machado },
+  { id:23, name:'Jeferson Przibilowicz',  role:'Estoque',              tier:'internal', region:null, phone:null, initials:'JP', photo: IMG.team.jeferson },
+  { id:24, name:'Rafael Wildner',         role:'Auxiliar de Estoque',  tier:'internal', region:null, phone:null, initials:'RW', photo: IMG.team.rafael },
+  { id:25, name:'Vinicius André Scholze', role:'Administrativo / T.I', tier:'internal', region:null, phone:null, initials:'VS', photo: IMG.team.vinicius },
 ];
 
 const TIER_LABELS = {
@@ -231,6 +240,7 @@ const TIER_LABELS = {
   promoters:    'Promotores Técnicos',
   reps:         'Representantes Comerciais',
   interns:      'Estagiários',
+  internal:     'Equipe Interna',
 };
 
 const REVIEWS = [
@@ -842,7 +852,7 @@ function ProductsPage({ addToQuote, quoteItems }) {
           </div>
           {filtered.length===0
             ? <div style={{ padding:'64px 20px',textAlign:'center',color:t.mistSoft,background:t.surface,borderRadius:'16px',border:`1px solid ${t.divider}` }}>Nenhum produto encontrado com esses filtros.</div>
-            : <div style={{ display:'grid',gap:'12px',gridTemplateColumns:'repeat(auto-fill,minmax(320px,1fr))' }}>
+            : <div style={{ display:'grid',gap:'16px',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))' }}>
                 {filtered.map(p => <ProductCard key={p.id} product={p} onAdd={()=>addToQuote(p.id)} inQuote={quoteItems.some(i=>i.id===p.id)}/>)}
               </div>
           }
@@ -876,29 +886,43 @@ function ProductCard({ product, onAdd, inQuote }) {
   const sl = product.sp.map(s=>s==='dog'?'Cães':'Gatos').join(' · ');
   const imgSrc = product.img ? IMG.products[product.img] : null;
   const [imgErr, setImgErr] = useState(false);
+  const [hovered, setHovered] = useState(false);
   return (
-    <div className="ch sm" style={{ display:'flex',gap:'14px',padding:'16px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px',minHeight:'140px' }}>
-      <div style={{ width:'88px',height:'88px',flexShrink:0,borderRadius:'10px',background:t.obsidianSoft,border:`1px solid ${t.divider}`,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center' }}>
+    <div className="sm" onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
+      style={{ display:'flex',flexDirection:'column',background:t.obsidianSoft,border:`1px solid ${hovered?t.teal+'50':t.divider}`,borderRadius:'16px',overflow:'hidden',transition:'all 200ms cubic-bezier(.25,.46,.45,.94)',transform:hovered?'translateY(-2px)':'none',boxShadow:hovered?`0 8px 32px rgba(0,0,0,.3)`:' none' }}>
+      {/* Imagem do produto */}
+      <div style={{ width:'100%',aspectRatio:'1',background:t.obsidian,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative' }}>
         {imgSrc && !imgErr
-          ? <img src={imgSrc} alt={product.name} onError={() => setImgErr(true)} style={{ width:'100%',height:'100%',objectFit:'contain',padding:'6px' }} />
-          : <Pill size={26} color={t.mistGhost} strokeWidth={1.4}/>
+          ? <img src={imgSrc} alt={product.name} onError={()=>setImgErr(true)} style={{ width:'100%',height:'100%',objectFit:'contain',padding:'20px',transition:'transform 300ms ease',transform:hovered?'scale(1.05)':'scale(1)' }} />
+          : <Pill size={40} color={t.mistGhost} strokeWidth={1.2}/>
         }
-      </div>
-      <div style={{ flex:1,display:'flex',flexDirection:'column',gap:'6px',minWidth:0 }}>
-        <div style={{ display:'flex',alignItems:'center',gap:'8px',flexWrap:'wrap' }}>
-          <span style={{ fontSize:'10px',fontWeight:600,letterSpacing:'.05em',textTransform:'uppercase',color:t.tealLuminous }}>{product.brand}</span>
-          <span style={{ fontSize:'10px',color:t.mistGhost }}>·</span>
-          <span style={{ fontSize:'10px',color:t.mistSoft,textTransform:'uppercase',letterSpacing:'.05em' }}>{cl}</span>
-          <span style={{ fontSize:'10px',color:t.mistGhost }}>·</span>
-          <span style={{ fontSize:'10px',color:t.mistSoft }}>{sl}</span>
+        {/* Badge espécie */}
+        <div style={{ position:'absolute',top:'10px',left:'10px',display:'flex',gap:'4px' }}>
+          {product.sp.map(s => (
+            <span key={s} style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.05em',textTransform:'uppercase',padding:'3px 7px',borderRadius:'100px',background:s==='dog'?`${t.teal}25`:`${t.tealDeep}25`,color:s==='dog'?t.tealLuminous:t.teal,border:`1px solid ${s==='dog'?t.teal+'40':t.tealDeep+'40'}` }}>
+              {s==='dog'?'Cão':'Gato'}
+            </span>
+          ))}
         </div>
-        <h3 className="fd" style={{ fontSize:'16px',fontWeight:600,color:t.mist,margin:0,lineHeight:1.25 }}>{product.name}</h3>
-        <p style={{ fontSize:'13px',color:t.mistSoft,lineHeight:1.5,margin:0,flex:1 }}>{product.desc}</p>
-        <div style={{ display:'flex',gap:'8px',marginTop:'8px',alignItems:'center' }}>
-          <button onClick={onAdd} className="bp" disabled={inQuote} style={{ flex:1,padding:'9px 14px',background:inQuote?`${t.vital}20`:`linear-gradient(180deg,${t.teal} 0%,${t.tealDeep} 100%)`,color:inQuote?t.vital:t.obsidian,border:inQuote?`1px solid ${t.vital}40`:'none',borderRadius:'8px',fontSize:'13px',fontWeight:600,cursor:inQuote?'default':'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",display:'flex',alignItems:'center',justifyContent:'center',gap:'6px' }}>
-            {inQuote?<><Check size={14} strokeWidth={3}/> No orçamento</>:<><Plus size={14} strokeWidth={2.5}/> Adicionar</>}
+        {/* Badge marca */}
+        <div style={{ position:'absolute',top:'10px',right:'10px',fontSize:'9px',fontWeight:700,letterSpacing:'.05em',textTransform:'uppercase',padding:'3px 7px',borderRadius:'100px',background:`${t.obsidian}cc`,backdropFilter:'blur(8px)',color:t.mistSoft,border:`1px solid ${t.divider}` }}>
+          {product.brand}
+        </div>
+      </div>
+      {/* Info */}
+      <div style={{ padding:'14px',display:'flex',flexDirection:'column',gap:'6px',flex:1 }}>
+        <div style={{ fontSize:'10px',fontWeight:600,letterSpacing:'.08em',textTransform:'uppercase',color:t.mistGhost }}>{cl}</div>
+        <h3 className="fd" style={{ fontSize:'15px',fontWeight:700,color:t.mist,margin:0,lineHeight:1.2 }}>{product.name}</h3>
+        <p style={{ fontSize:'12px',color:t.mistSoft,lineHeight:1.5,margin:0,flex:1,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden' }}>{product.desc}</p>
+        {/* Ações */}
+        <div style={{ display:'flex',gap:'6px',marginTop:'8px',alignItems:'center' }}>
+          <button onClick={onAdd} className="bp sm" disabled={inQuote} style={{ flex:1,padding:'8px 12px',background:inQuote?`${t.vital}15`:`${t.teal}18`,color:inQuote?t.vital:t.tealLuminous,border:`1px solid ${inQuote?t.vital+'40':t.teal+'40'}`,borderRadius:'8px',fontSize:'12px',fontWeight:600,cursor:inQuote?'default':'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",display:'flex',alignItems:'center',justifyContent:'center',gap:'5px' }}>
+            {inQuote?<><Check size={12} strokeWidth={3}/> Adicionado</>:<><Plus size={12} strokeWidth={2.5}/> Orçamento</>}
           </button>
-          <a href={product.link} target="_blank" rel="noopener noreferrer" className="sm" style={{ padding:'9px 12px',background:'transparent',border:`1px solid ${t.divider}`,borderRadius:'8px',color:t.mistSoft,fontSize:'13px',textDecoration:'none',display:'flex',alignItems:'center' }}><ExternalLink size={13}/></a>
+          <a href={product.link} target="_blank" rel="noopener noreferrer" className="sm" style={{ padding:'8px 10px',background:'transparent',border:`1px solid ${t.divider}`,borderRadius:'8px',color:t.mistSoft,textDecoration:'none',display:'flex',alignItems:'center',flexShrink:0 }}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor=`${t.teal}50`;e.currentTarget.style.color=t.tealLuminous;}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor=t.divider;e.currentTarget.style.color=t.mistSoft;}}
+          ><ExternalLink size={13}/></a>
         </div>
       </div>
     </div>
@@ -907,7 +931,7 @@ function ProductCard({ product, onAdd, inQuote }) {
 
 /* ─── TEAM ───────────────────────────────────────────────────────── */
 function TeamPage() {
-  const tiers = ['leadership','coordination','promoters','reps','interns'];
+  const tiers = ['leadership','coordination','promoters','reps','interns','internal'];
   return (
     <>
       <section style={{ padding:'56px 24px 32px',textAlign:'center' }}>
@@ -938,7 +962,7 @@ function TeamPage() {
 }
 
 function TeamCard({ member }) {
-  const showPhone = !member.hidePhone;
+  const showPhone = !member.hidePhone && member.phone;
   const wa = showPhone ? `https://wa.me/55${member.phone.replace(/\D/g,'')}` : null;
   const inner = (
     <>
