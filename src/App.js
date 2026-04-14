@@ -3,7 +3,7 @@ import {
   Search, Menu, X, Plus, Minus, Phone, MapPin, Star, Syringe, Bug,
   FlaskConical, Activity, Thermometer, Stethoscope, Pill, MoreHorizontal,
   Mail, Clock, Truck, Sun, Headphones, Check, Send, MessageCircle,
-  ShoppingBag, Trash2, ArrowRight, ExternalLink, User,
+  ShoppingBag, Trash2, ArrowRight, ExternalLink, User, BookOpen,
 } from 'lucide-react';
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
@@ -76,7 +76,8 @@ const IMG = {
     trocoxil:                    process.env.PUBLIC_URL+'/images/produtos/trocoxil.jpg',
     solensia:                    process.env.PUBLIC_URL+'/images/produtos/solensia.jpg',
     dexdomitor:                  process.env.PUBLIC_URL+'/images/produtos/dexdomitor.jpg',
-    antisedan:                   process.env.PUBLIC_URL+'/images/produtos/Antisedan.jpg',
+    antisedan:                   process.env.PUBLIC_URL+'/images/produtos/antisedan.jpg',
+    torbugesic:                  process.env.PUBLIC_URL+'/images/produtos/torbugesic.jpg',
     telazol:                     process.env.PUBLIC_URL+'/images/produtos/telazol.jpg',
     librela:                     process.env.PUBLIC_URL+'/images/produtos/librela.jpg',
     cerenia_inj:                 process.env.PUBLIC_URL+'/images/produtos/cerenia-inj.jpg',
@@ -146,10 +147,12 @@ const STATS = [
 
 /* ─── VANTAGENS ──────────────────────────────────────────────────── */
 const ADVANTAGES = [
-  { icon: Truck,       title: 'Processo Ágil',      desc: 'Distribuição eficiente com entrega em até 48h para todo o Rio Grande do Sul.' },
-  { icon: Stethoscope, title: 'Qualidade Garantida', desc: 'Armazenamento com controle de temperatura para manter a integridade dos produtos.' },
-  { icon: Sun,         title: 'Energia Sustentável', desc: 'Utilizamos energia solar com armazenamento em baterias em nossas operações.' },
-  { icon: Headphones,  title: 'Suporte Pós-Venda',   desc: 'Assistência técnica especializada com treinamentos e consultoria para o seu negócio.' },
+  { icon: Truck,       title: 'Processo Ágil',           desc: 'Distribuição eficiente com entrega em até 48h para todo o Rio Grande do Sul.' },
+  { icon: Stethoscope, title: 'Qualidade Garantida',      desc: 'Armazenamento com controle de temperatura para manter a integridade dos produtos.' },
+  { icon: Sun,         title: 'Energia Sustentável',      desc: 'Utilizamos energia solar com armazenamento em baterias em nossas operações.' },
+  { icon: Headphones,  title: 'Suporte Pré e Pós-Venda', desc: 'Atendimento especializado em todas as etapas, do primeiro contato ao acompanhamento contínuo.' },
+  { icon: BookOpen,    title: 'Visitas e Treinamentos',   desc: 'Visitas técnicas regulares, treinamentos e capacitação para sua equipe.' },
+  { icon: null,        title: 'Merchandising e Eventos',  desc: 'Entrega de materiais, organização de vitrines, merchandising e eventos.', customIcon: true },
 ];
 
 /* ─── CATEGORIAS ─────────────────────────────────────────────────── */
@@ -623,7 +626,17 @@ function HomePage({ navigate }) {
               return (
                 <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px' }}>
                   <div style={{ width:'48px',height:'48px',borderRadius:'12px',background:`${t.teal}12`,border:`1px solid ${t.teal}30`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'20px' }}>
-                    <Icon size={22} color={t.tealLuminous} strokeWidth={1.8}/>
+                    {a.customIcon ? (
+                      <svg width="22" height="22" fill="none" stroke={t.tealLuminous} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <polyline points="2,10 12,2 22,10"/>
+                        <polyline points="17,4 17,2 19,2 19,5"/>
+                        <rect x="3" y="10" width="18" height="12" rx="0"/>
+                        <line x1="12" y1="13" x2="12" y2="19"/>
+                        <line x1="9" y1="16" x2="15" y2="16"/>
+                      </svg>
+                    ) : (
+                      <Icon size={22} color={t.tealLuminous} strokeWidth={1.8}/>
+                    )}
                   </div>
                   <h3 className="fd" style={{ fontSize:'17px',fontWeight:600,color:t.mist,margin:'0 0 8px' }}>{a.title}</h3>
                   <p style={{ fontSize:'14px',color:t.mistSoft,lineHeight:1.55,margin:0 }}>{a.desc}</p>
@@ -773,7 +786,17 @@ function AboutPage({ navigate }) {
             return (
               <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px' }}>
                 <div style={{ width:'48px',height:'48px',borderRadius:'12px',background:`${t.teal}12`,border:`1px solid ${t.teal}30`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'20px' }}>
-                  <Icon size={22} color={t.tealLuminous} strokeWidth={1.8}/>
+                  {a.customIcon ? (
+                    <svg width="22" height="22" fill="none" stroke={t.tealLuminous} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <polyline points="2,10 12,2 22,10"/>
+                      <polyline points="17,4 17,2 19,2 19,5"/>
+                      <rect x="3" y="10" width="18" height="12" rx="0"/>
+                      <line x1="12" y1="13" x2="12" y2="19"/>
+                      <line x1="9" y1="16" x2="15" y2="16"/>
+                    </svg>
+                  ) : (
+                    <Icon size={22} color={t.tealLuminous} strokeWidth={1.8}/>
+                  )}
                 </div>
                 <h3 className="fd" style={{ fontSize:'17px',fontWeight:600,color:t.mist,margin:'0 0 8px' }}>{a.title}</h3>
                 <p style={{ fontSize:'14px',color:t.mistSoft,lineHeight:1.55,margin:0 }}>{a.desc}</p>
