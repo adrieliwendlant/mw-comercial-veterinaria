@@ -1021,13 +1021,14 @@ function TeamCard({ member }) {
 function ContactPage({ quoteItems, clearQuote }) {
   const hasQuote = quoteItems.length>0;
   const [form,setForm]     = useState({name:'',establishment:'',email:'',phone:'',city:'',message:''});
-  const [sent,setSent]     = useState(false);
-  const [errors,setErrors] = useState({});
+  const [sent,setSent]       = useState(false);
+  const [sending,setSending] = useState(false);
+  const [errors,setErrors]   = useState({});
   const qp = quoteItems.map(qi => ({...PRODUCTS.find(p=>p.id===qi.id),qty:qi.qty}));
   const rep = form.city ? findRepByCity(form.city) : null;
 
   const hc = (f,v) => { setForm(p=>({...p,[f]:v})); if(errors[f]) setErrors(e=>({...e,[f]:null})); };
-  const submit = () => {
+  const submit = async () => {
     const e={};
     if(!form.name.trim())  e.name='Nome é obrigatório';
     if(!form.email.trim()) e.email='E-mail é obrigatório';
@@ -1036,8 +1037,36 @@ function ContactPage({ quoteItems, clearQuote }) {
     if(!form.city.trim())  e.city='Cidade é obrigatória';
     if(!hasQuote&&!form.message.trim()) e.message='Mensagem é obrigatória';
     if(Object.keys(e).length){setErrors(e);return;}
-    setSent(true);
-    setTimeout(()=>{setSent(false);setForm({name:'',establishment:'',email:'',phone:'',city:'',message:''});clearQuote();},4000);
+
+    setSending(true);
+    try {
+      const produtos = qp.length > 0 ? qp.map(p=>`${p.name} x${p.qty}`).join(', ') : '';
+      const representante = rep ? rep.name : '';
+      const res = await fetch('https://formspree.io/f/mvzdgbqw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          nome:            form.name,
+          estabelecimento: form.establishment,
+          email:           form.email,
+          telefone:        form.phone,
+          cidade:          form.city,
+          mensagem:        form.message || '',
+          produtos:        produtos,
+          representante:   representante,
+        })
+      });
+      if(res.ok) {
+        setSent(true);
+        setForm({name:'',establishment:'',email:'',phone:'',city:'',message:''});
+        clearQuote();
+      } else {
+        alert('Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.');
+      }
+    } catch(err) {
+      alert('Erro ao enviar. Verifique sua conexão e tente novamente.');
+    }
+    setSending(false);
   };
   return (
     <section style={{ padding:'56px 24px 96px' }}>
@@ -1091,8 +1120,8 @@ function ContactPage({ quoteItems, clearQuote }) {
                   </div>
                 )}
                 {!hasQuote&&<Field label="Mensagem" textarea value={form.message} onChange={v=>hc('message',v)} error={errors.message}/>}
-                <button onClick={submit} className="bp" style={{ marginTop:'8px',padding:'14px 24px',background:`linear-gradient(180deg,${t.teal} 0%,${t.tealDeep} 100%)`,color:t.obsidian,border:'none',borderRadius:'10px',fontSize:'15px',fontWeight:600,cursor:'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",display:'flex',alignItems:'center',justifyContent:'center',gap:'8px' }}>
-                  <Send size={16}/>{hasQuote?'Enviar Solicitação de Orçamento':'Enviar Mensagem'}
+                <button onClick={submit} className="bp" disabled={sending} style={{ marginTop:'8px',padding:'14px 24px',background:`linear-gradient(180deg,${t.teal} 0%,${t.tealDeep} 100%)`,color:t.obsidian,border:'none',borderRadius:'10px',fontSize:'15px',fontWeight:600,cursor:sending?'wait':'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",display:'flex',alignItems:'center',justifyContent:'center',gap:'8px',opacity:sending?0.7:1 }}>
+                  <Send size={16}/>{sending?'Enviando…':hasQuote?'Enviar Solicitação de Orçamento':'Enviar Mensagem'}
                 </button>
               </div>
             )}
