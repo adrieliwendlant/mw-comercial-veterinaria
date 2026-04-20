@@ -1,0 +1,35 @@
+name: Deploy MW Comercial Veterinária
+
+on:
+  push:
+    branches:
+      - main   # dispara sempre que você fizer push no branch main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build do projeto
+        run: npm run build
+        env:
+          CI: false   # evita tratar warnings como erros
+
+      - name: Deploy para gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          cname: mwcomercialveterinaria.com.br   # mantém o domínio customizado

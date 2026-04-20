@@ -12,6 +12,7 @@ const t = {
   obsidianSoft:       '#222831',
   anthracite:         '#2A3140',
   anthraciteElevated: '#333D50',
+  brandLight:         '#7CA9B4',   /* Pantone 7709 C — cor oficial da marca */
   teal:               '#6BBCC8',
   tealLuminous:       '#9BC5CE',
   tealDeep:           '#4A9EAB',
@@ -536,7 +537,7 @@ function HomePage({ navigate }) {
       </section>
 
       {/* Foto equipe + Stats — fora do vídeo */}
-      <section style={{ padding:'48px 24px 64px' }}>
+      <section style={{ padding:'48px 24px 64px', backgroundColor: t.obsidian }}>
         <div style={{ maxWidth:'1080px',margin:'0 auto',textAlign:'center' }}>
           <div className="fu" style={{ maxWidth:'780px',margin:'0 auto 48px',borderRadius:'20px',overflow:'hidden',border:`1px solid ${t.divider}`,boxShadow:'0 24px 60px rgba(0,0,0,.4)',position:'relative',aspectRatio:'3/2' }}>
             <Photo src={IMG.equipe} alt="Equipe MW Comercial Veterinária" />
@@ -557,21 +558,21 @@ function HomePage({ navigate }) {
       </section>
 
       {/* Sobre */}
-      <section style={{ padding:'40px 24px 80px' }}>
+      <section style={{ padding:'40px 24px 80px', backgroundColor: t.brandLight }}>
         <div style={{ maxWidth:'1080px',margin:'0 auto' }}>
           <div style={{ display:'grid',gap:'48px',gridTemplateColumns:'repeat(auto-fit,minmax(320px,1fr))',alignItems:'center' }}>
             <div>
-              <div style={{ fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',color:t.teal,fontWeight:600,marginBottom:'14px' }}>Sobre Nós</div>
-              <h2 className="fd" style={{ fontSize:'clamp(1.6rem,3.5vw,2.2rem)',fontWeight:700,color:t.mist,letterSpacing:'-.02em',marginTop:0,marginBottom:'20px',lineHeight:1.15 }}>
-                Há mais de <span style={{ color:t.teal }}>40 anos</span> dando suporte<br/>a estabelecimentos<br/>veterinários do RS
+              <div style={{ fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',color:t.obsidian,fontWeight:600,marginBottom:'14px' }}>Sobre Nós</div>
+              <h2 className="fd" style={{ fontSize:'clamp(1.6rem,3.5vw,2.2rem)',fontWeight:700,color:t.obsidian,letterSpacing:'-.02em',marginTop:0,marginBottom:'20px',lineHeight:1.15 }}>
+                Há mais de <span style={{ color:t.obsidian,fontWeight:800 }}>40 anos</span> dando suporte<br/>a estabelecimentos<br/>veterinários do RS
               </h2>
-              <p style={{ fontSize:'16px',color:t.mistSoft,lineHeight:1.65,marginBottom:'16px' }}>
-                Distribuímos as linhas <strong style={{ color:t.mist }}>Zoetis</strong> de animais de companhia no interior do Rio Grande do Sul e a linha <strong style={{ color:t.mist }}>Urano</strong> para todo o estado, com agilidade na entrega, qualidade no armazenamento e suporte técnico especializado.
+              <p style={{ fontSize:'16px',color:t.anthracite,lineHeight:1.65,marginBottom:'16px' }}>
+                Distribuímos as linhas <strong style={{ color:t.obsidian }}>Zoetis</strong> de animais de companhia no interior do Rio Grande do Sul e a linha <strong style={{ color:t.obsidian }}>Urano</strong> para todo o estado, com agilidade na entrega, qualidade no armazenamento e suporte técnico especializado.
               </p>
-              <p style={{ fontSize:'16px',color:t.mistSoft,lineHeight:1.65,marginBottom:'28px' }}>
+              <p style={{ fontSize:'16px',color:t.anthracite,lineHeight:1.65,marginBottom:'28px' }}>
                 Nosso objetivo é desenvolver o mercado veterinário e melhorar a qualidade de vida dos pets.
               </p>
-              <GhostBtn onClick={() => navigate('about')}>Saiba mais sobre nós →</GhostBtn>
+              <GhostBtn dark onClick={() => navigate('about')}>Saiba mais sobre nós →</GhostBtn>
             </div>
             <div style={{ aspectRatio:'4/3',borderRadius:'16px',overflow:'hidden',border:`1px solid ${t.divider}`,boxShadow:'0 16px 48px rgba(0,0,0,.35)',position:'relative' }}>
               <Photo src={IMG.fachada} alt="Sede MW Comercial Veterinária — Santa Rosa, RS" />
@@ -584,7 +585,7 @@ function HomePage({ navigate }) {
       </section>
 
       {/* Produtos em destaque */}
-      <section style={{ padding:'40px 24px 80px' }}>
+      <section style={{ padding:'40px 24px 80px', backgroundColor: t.obsidian }}>
         <div style={{ maxWidth:'1280px',margin:'0 auto' }}>
           <SectionHeader kicker="Catálogo" title={<>Produtos em <span style={{ color:t.teal }}>destaque</span></>} subtitle="Conheça alguns dos produtos mais procurados que distribuímos." />
           <div style={{ display:'grid',gap:'14px',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',marginBottom:'40px' }}>
@@ -601,7 +602,7 @@ function HomePage({ navigate }) {
       </section>
 
       {/* Equipe */}
-      <section style={{ padding:'40px 24px 80px' }}>
+      <section style={{ padding:'40px 24px 80px', backgroundColor: t.brandLight }}>
         <div style={{ maxWidth:'960px',margin:'0 auto',padding:'56px 40px',borderRadius:'20px',background:`linear-gradient(135deg,${t.anthracite} 0%,${t.anthraciteElevated} 100%)`,border:`1px solid ${t.teal}25`,textAlign:'center',position:'relative',overflow:'hidden' }}>
           <div style={{ position:'absolute',top:'-40%',left:'50%',transform:'translateX(-50%)',width:'600px',height:'600px',borderRadius:'50%',background:`radial-gradient(circle,${t.teal}18 0%,transparent 60%)`,pointerEvents:'none' }} />
           <div style={{ position:'relative' }}>
@@ -617,14 +618,14 @@ function HomePage({ navigate }) {
       </section>
 
       {/* Vantagens */}
-      <section style={{ padding:'40px 24px 80px' }}>
+      <section style={{ padding:'40px 24px 80px', backgroundColor: t.obsidian }}>
         <div style={{ maxWidth:'1100px',margin:'0 auto' }}>
           <SectionHeader kicker="Vantagens" title="Com a MW você tem" />
-          <div style={{ display:'grid',gap:'16px',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))' }}>
+          <div style={{ display:'grid',gap:'16px',gridTemplateColumns:'repeat(3,1fr)',justifyItems:'center' }}>
             {ADVANTAGES.map((a,i) => {
               const Icon = a.icon;
               return (
-                <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px' }}>
+                <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px',width:'100%' }}>
                   <div style={{ width:'48px',height:'48px',borderRadius:'12px',background:`${t.teal}12`,border:`1px solid ${t.teal}30`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'20px' }}>
                     {a.customIcon ? (
                       <svg width="22" height="22" fill="none" stroke={t.tealLuminous} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -651,7 +652,7 @@ function HomePage({ navigate }) {
       <InstagramSection />
 
       {/* Avaliações */}
-      <section style={{ padding:'40px 24px 80px' }}>
+      <section style={{ padding:'40px 24px 80px', backgroundColor: t.obsidian }}>
         <div style={{ maxWidth:'1280px',margin:'0 auto' }}>
           <SectionHeader kicker="Avaliações" title="O que dizem nossos parceiros" />
           <div style={{ display:'grid',gap:'20px',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))' }}>
@@ -677,9 +678,9 @@ function HomePage({ navigate }) {
 /* ─── INSTAGRAM SECTION ──────────────────────────────────────────── */
 function InstagramSection() {
   return (
-    <section style={{ padding:'40px 24px 80px' }}>
+    <section style={{ padding:'40px 24px 80px', backgroundColor: t.brandLight }}>
       <div style={{ maxWidth:'1100px',margin:'0 auto' }}>
-        <SectionHeader kicker="Redes Sociais" title="Nos acompanhe nas redes sociais" />
+        <SectionHeader kicker="Redes Sociais" title="Nos acompanhe nas redes sociais" kickerColor={t.obsidian} titleColor={t.obsidian} />
 
         {/* Card estilo Instagram — fundo branco */}
         <div style={{ background:'#ffffff', borderRadius:'20px', overflow:'hidden', maxWidth:'680px', margin:'0 auto', boxShadow:'0 8px 40px rgba(0,0,0,.25)' }}>
@@ -780,11 +781,11 @@ function AboutPage({ navigate }) {
           </div>
         </div>
         <SectionHeader kicker="Vantagens" title="Com a MW você tem" />
-        <div style={{ display:'grid',gap:'16px',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))' }}>
+        <div style={{ display:'grid',gap:'16px',gridTemplateColumns:'repeat(3,1fr)',justifyItems:'center' }}>
           {ADVANTAGES.map((a,i) => {
             const Icon = a.icon;
             return (
-              <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px' }}>
+              <div key={i} className="ch sm" style={{ padding:'32px 28px',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'14px',width:'100%' }}>
                 <div style={{ width:'48px',height:'48px',borderRadius:'12px',background:`${t.teal}12`,border:`1px solid ${t.teal}30`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'20px' }}>
                   {a.customIcon ? (
                     <svg width="22" height="22" fill="none" stroke={t.tealLuminous} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -1091,7 +1092,7 @@ function ContactPage({ quoteItems, clearQuote }) {
             <CInfo icon={Phone} label="Telefone / WhatsApp" value={COMPANY.phone} href={`https://wa.me/${COMPANY.whatsapp}`}/>
             <CInfo icon={Mail}  label="E-mail" value={COMPANY.email} href={`mailto:${COMPANY.email}`}/>
             <CInfo icon={MapPin} label="Endereço" value={COMPANY.address.street} sub={`${COMPANY.address.district} — ${COMPANY.address.city}/${COMPANY.address.state}`}/>
-            <CInfo icon={Clock} label="Horário" value="Seg a Sex · 08h às 18h"/>
+            <CInfo icon={Clock} label="Horário" value="Seg a Sex · 08h–12h e 13h30–18h"/>
           </div>
           <div style={{ padding:'clamp(24px,4vw,36px)',background:t.surface,border:`1px solid ${t.divider}`,borderRadius:'16px' }}>
             <h2 className="fd" style={{ fontSize:'20px',fontWeight:600,color:t.mist,margin:'0 0 24px' }}>Seus dados</h2>
@@ -1133,11 +1134,11 @@ function ContactPage({ quoteItems, clearQuote }) {
 }
 
 /* ─── SHARED ─────────────────────────────────────────────────────── */
-function SectionHeader({ kicker, title, subtitle }) {
+function SectionHeader({ kicker, title, subtitle, kickerColor, titleColor }) {
   return (
     <div style={{ textAlign:'center',marginBottom:'48px' }}>
-      {kicker&&<div style={{ fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',color:t.teal,fontWeight:600,marginBottom:'14px' }}>{kicker}</div>}
-      <h2 className="fd" style={{ fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:700,color:t.mist,letterSpacing:'-.02em',margin:0,lineHeight:1.15 }}>{title}</h2>
+      {kicker&&<div style={{ fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',color:kickerColor||t.teal,fontWeight:600,marginBottom:'14px' }}>{kicker}</div>}
+      <h2 className="fd" style={{ fontSize:'clamp(1.75rem,4vw,2.5rem)',fontWeight:700,color:titleColor||t.mist,letterSpacing:'-.02em',margin:0,lineHeight:1.15 }}>{title}</h2>
       {subtitle&&<p style={{ fontSize:'17px',color:t.mistSoft,marginTop:'16px',maxWidth:'640px',marginLeft:'auto',marginRight:'auto',lineHeight:1.6 }}>{subtitle}</p>}
     </div>
   );
@@ -1145,10 +1146,14 @@ function SectionHeader({ kicker, title, subtitle }) {
 function PrimaryBtn({ children, onClick }) {
   return <button onClick={onClick} className="bp" style={{ padding:'13px 26px',background:`linear-gradient(180deg,${t.teal} 0%,${t.tealDeep} 100%)`,color:t.obsidian,border:'none',borderRadius:'10px',fontSize:'15px',fontWeight:600,cursor:'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif" }}>{children}</button>;
 }
-function GhostBtn({ children, onClick }) {
-  return <button onClick={onClick} className="sm" style={{ padding:'13px 22px',background:'transparent',color:t.mist,border:`1px solid ${t.divider}`,borderRadius:'10px',fontSize:'15px',fontWeight:500,cursor:'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif" }}
-    onMouseEnter={e=>{e.currentTarget.style.borderColor=`${t.teal}60`;e.currentTarget.style.color=t.tealLuminous;}}
-    onMouseLeave={e=>{e.currentTarget.style.borderColor=t.divider;e.currentTarget.style.color=t.mist;}}
+function GhostBtn({ children, onClick, dark }) {
+  const col   = dark ? t.obsidian       : t.mist;
+  const bord  = dark ? `${t.obsidian}80` : t.divider;
+  const hCol  = dark ? t.tealDeep       : t.tealLuminous;
+  const hBord = dark ? t.tealDeep       : `${t.teal}60`;
+  return <button onClick={onClick} className="sm" style={{ padding:'13px 22px',background:'transparent',color:col,border:`1px solid ${bord}`,borderRadius:'10px',fontSize:'15px',fontWeight:500,cursor:'pointer',fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif" }}
+    onMouseEnter={e=>{e.currentTarget.style.borderColor=hBord;e.currentTarget.style.color=hCol;}}
+    onMouseLeave={e=>{e.currentTarget.style.borderColor=bord;e.currentTarget.style.color=col;}}
   >{children}</button>;
 }
 function CInfo({ icon: Icon, label, value, sub, href }) {
@@ -1255,8 +1260,14 @@ function SiteFooter({ navigate }) {
             </ul>
           </div>
           <div>
-            <div style={{ fontSize:'11px',letterSpacing:'.15em',textTransform:'uppercase',color:t.teal,fontWeight:600,marginBottom:'14px' }}>Distribuidor</div>
-            <div style={{ display:'flex',gap:'8px',flexWrap:'wrap' }}>
+            <div style={{ fontSize:'11px',letterSpacing:'.15em',textTransform:'uppercase',color:t.teal,fontWeight:600,marginBottom:'14px' }}>Horário</div>
+            <div style={{ fontSize:'13px',color:t.mistSoft,lineHeight:1.8 }}>
+              Seg a Sex<br/>
+              <span style={{ color:t.tealLuminous,fontWeight:600 }}>08h–12h</span>
+              <span style={{ color:t.mistGhost }}> · </span>
+              <span style={{ color:t.tealLuminous,fontWeight:600 }}>13h30–18h</span>
+            </div>
+            <div style={{ display:'flex',gap:'8px',flexWrap:'wrap',marginTop:'14px' }}>
               {['Zoetis','Urano'].map(d=><div key={d} style={{ padding:'6px 12px',borderRadius:'6px',background:t.surface,border:`1px solid ${t.divider}`,fontSize:'12px',color:t.mist,fontWeight:600 }}>{d}</div>)}
             </div>
           </div>
