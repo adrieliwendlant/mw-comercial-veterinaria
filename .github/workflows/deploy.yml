@@ -3,7 +3,10 @@ name: Deploy MW Comercial Veterinária
 on:
   push:
     branches:
-      - main   # dispara sempre que você fizer push no branch main
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-deploy:
@@ -20,16 +23,16 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependências
-        run: npm ci
+        run: npm install
 
       - name: Build do projeto
         run: npm run build
         env:
-          CI: false   # evita tratar warnings como erros
+          CI: false
 
       - name: Deploy para gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          cname: mwcomercialveterinaria.com.br   # mantém o domínio customizado
+          cname: mwcomercialveterinaria.com.br
