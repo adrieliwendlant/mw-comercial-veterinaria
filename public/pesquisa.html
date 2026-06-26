@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Pesquisa de Satisfação — MW Comercial Veterinária</title>
+<meta name="theme-color" content="#11151b" />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ============================================================= -->
+<!--  CONFIGURAÇÃO DO GOOGLE FORMS  (preencher 1 vez — ver guia)   -->
+<!--  Enquanto estiver "COLE_SEU_ID_AQUI", a página funciona em    -->
+<!--  modo de teste e NÃO envia nada. Depois de colar os IDs, ela  -->
+<!--  passa a gravar as respostas direto na planilha do Forms.     -->
+<!-- ============================================================= -->
+<script>
+  const GOOGLE_FORM = {
+    actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLScAFrnG5EG9fyTeH2WYrjUS0f7fYFqCGHJnjZGA1FjWo08Xvw/formResponse",
+    fields: {
+      nps:             "entry.1101696274",
+      atendimento:     "entry.11770376",
+      pedido:          "entry.483900205",
+      recebimento:     "entry.11661735",
+      posvenda:        "entry.1266007081",
+      financeiro:      "entry.1307405712",
+      comentario:      "entry.217563538",
+      estabelecimento: "entry.2022663876",
+      cidade:          "entry.1330401528",
+      representante:   "entry.1400151766",
+      whatsapp:        "entry.239878180"
+    }
+  };
+</script>
+
+<style>
+  :root{
+    --bg:        #11151b;
+    --surface:   #1a1f27;
+    --surface-2: #222831;
+    --line:      #2e3744;
+    --line-soft: #283040;
+    --ink:       #eef3f6;
+    --ink-mut:   #9fb1bd;
+    --ink-faint: #6c7d8a;
+    --brand:     #7ca9b4;  /* Pantone 7709 */
+    --teal:      #4a9eab;
+    --teal-2:    #6bbcc8;
+    --ice:       #c9dbde;  /* Pantone 7457 */
+    --good:      #6fb58a;
+    --warn:      #e6b566;
+    --bad:       #d97074;
+    --radius:    16px;
+    --shadow:    0 18px 50px -22px rgba(0,0,0,.75);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1100px 700px at 50% -8%, rgba(124,169,180,.16), transparent 60%),
+      radial-gradient(800px 600px at 100% 100%, rgba(74,158,171,.10), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:28px 18px calc(120px + env(safe-area-inset-bottom));}
+
+  /* ---------- Cabeçalho ---------- */
+  header{display:flex;align-items:center;margin-bottom:26px;}
+  .logo-img{height:56px;width:auto;display:block;}
+  @media (max-width:430px){.logo-img{height:48px;}}
+
+  /* ---------- Hero ---------- */
+  .hero{margin-bottom:24px;}
+  .eyebrow{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin:0 0 8px;}
+  h1{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(30px,8.5vw,42px);line-height:1.02;letter-spacing:.2px;margin:0 0 12px;}
+  h1 .hl{color:var(--teal-2);}
+  .hero p{margin:0;color:var(--ink-mut);font-size:15px;max-width:44ch;}
+  .meta{margin-top:14px;font-size:12.5px;color:var(--ink-faint);display:flex;align-items:center;gap:7px;}
+  .meta svg{width:14px;height:14px;flex:0 0 auto;}
+
+  /* ---------- Cartões ---------- */
+  .card{background:linear-gradient(180deg,var(--surface),#161b22);
+        border:1px solid var(--line-soft);border-radius:var(--radius);
+        padding:22px 18px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .qlabel{font-weight:600;font-size:15.5px;margin:0 0 4px;}
+  .qhint{font-size:13px;color:var(--ink-faint);margin:0 0 16px;}
+  .req{color:var(--teal-2);font-weight:600;}
+
+  /* Bloco de contato em destaque (notas baixas) */
+  #ident-card{transition:border-color .3s ease,background .3s ease,box-shadow .3s ease;}
+  #ident-card.urgent{
+    border-color:rgba(230,181,102,.55);
+    background:linear-gradient(180deg,rgba(230,181,102,.10),#161b22);
+    box-shadow:0 18px 50px -22px rgba(0,0,0,.75), inset 0 0 0 1px rgba(230,181,102,.18);
+  }
+  #ident-card.urgent #ident-title{color:var(--warn);}
+  #ident-card.urgent #wa-field input{border-color:rgba(230,181,102,.6);background:rgba(230,181,102,.06);}
+  .wa-badge{display:none;font-size:11px;font-weight:600;color:#1a1410;background:var(--warn);
+            border-radius:6px;padding:2px 7px;margin-left:7px;vertical-align:middle;}
+  #ident-card.urgent .wa-badge{display:inline-block;}
+
+  /* ---------- Escala NPS ---------- */
+  .nps-scale{display:grid;grid-template-columns:repeat(11,1fr);gap:5px;margin-top:4px;}
+  .nps-btn{appearance:none;border:1px solid var(--line);background:var(--surface-2);
+           color:var(--ink-mut);font-family:"Barlow Condensed",sans-serif;font-weight:600;
+           font-size:16px;border-radius:9px;aspect-ratio:1/1;cursor:pointer;
+           display:flex;align-items:center;justify-content:center;
+           transition:transform .12s ease,background .15s ease,color .15s ease,border-color .15s ease;}
+  .nps-btn:hover{border-color:var(--brand);color:var(--ink);}
+  .nps-btn:focus-visible{outline:2px solid var(--teal-2);outline-offset:2px;}
+  .nps-btn.fill{background:linear-gradient(160deg,var(--brand),var(--teal));border-color:transparent;color:#0c1116;}
+  .nps-btn.sel{transform:translateY(-3px) scale(1.06);
+               box-shadow:0 10px 20px -8px rgba(74,158,171,.65);
+               outline:2px solid var(--ice);outline-offset:2px;color:#0c1116;font-weight:700;}
+  .nps-ends{display:flex;justify-content:space-between;margin-top:11px;font-size:11.5px;color:var(--ink-faint);}
+  .nps-feedback{margin-top:14px;font-size:14px;font-weight:500;min-height:21px;
+                color:var(--ice);opacity:0;transform:translateY(4px);transition:.25s;}
+  .nps-feedback.show{opacity:1;transform:none;}
+
+  /* ---------- Áreas / estrelas ---------- */
+  .area{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line-soft);}
+  .area:first-of-type{border-top:none;padding-top:2px;}
+  .area-ic{width:34px;height:34px;border-radius:9px;background:var(--surface-2);
+           border:1px solid var(--line-soft);display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .area-ic svg{width:18px;height:18px;stroke:var(--brand);}
+  .area-name{flex:1;min-width:0;}
+  .area-name b{display:block;font-weight:600;font-size:14px;}
+  .area-name .sub{display:block;font-size:11.5px;color:var(--ink-faint);margin-top:1px;line-height:1.3;}
+  .area-na{font-size:11.5px;color:var(--ink-faint);background:none;border:none;cursor:pointer;padding:3px 0 0;text-decoration:underline;text-underline-offset:2px;}
+  .area-na.on{color:var(--teal-2);}
+  .stars{display:flex;gap:3px;flex:0 0 auto;}
+  .star{width:26px;height:26px;cursor:pointer;color:var(--line);transition:transform .1s ease,color .12s ease;}
+  .star svg{width:100%;height:100%;display:block;fill:currentColor;}
+  .star:hover{transform:scale(1.15);}
+  .star.lit{color:var(--warn);}
+  .area.na .stars{opacity:.32;pointer-events:none;}
+  .area.na .star{color:var(--line);}
+
+  /* ---------- Campos texto ---------- */
+  label.f{display:block;font-size:13px;color:var(--ink-mut);margin:0 0 6px;font-weight:500;}
+  textarea,input[type=text]{width:100%;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:11px;color:var(--ink);font-family:inherit;font-size:15px;padding:12px 13px;
+    transition:border-color .15s ease,box-shadow .15s ease;}
+  textarea{resize:vertical;min-height:88px;line-height:1.5;}
+  textarea::placeholder,input::placeholder{color:var(--ink-faint);}
+  textarea:focus,input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(74,158,171,.18);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid2 .full{grid-column:1/-1;}
+  @media (max-width:430px){.grid2{grid-template-columns:1fr;}}
+
+  /* ---------- Barra de envio ---------- */
+  .submitbar{position:fixed;left:0;right:0;bottom:0;z-index:20;
+    padding:14px 18px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(17,21,27,0),rgba(17,21,27,.92) 32%,var(--bg));}
+  .submitbar .inner{max-width:560px;margin:0 auto;}
+  .btn{width:100%;border:none;border-radius:13px;padding:16px;cursor:pointer;
+    font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:19px;letter-spacing:.6px;
+    color:#091015;background:linear-gradient(135deg,var(--brand),var(--teal-2));
+    box-shadow:0 14px 30px -12px rgba(74,158,171,.7);transition:transform .1s ease,filter .15s ease;
+    text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:9px;}
+  .btn:hover{filter:brightness(1.06);}
+  .btn:active{transform:translateY(1px);}
+  .btn[disabled]{opacity:.6;cursor:default;filter:none;}
+  .btn svg{width:18px;height:18px;}
+
+  .errnote{text-align:center;color:var(--bad);font-size:13px;margin:0 0 9px;opacity:0;height:0;overflow:hidden;transition:opacity .2s;}
+  .errnote.show{opacity:1;height:auto;margin-bottom:9px;}
+
+  .privacy{text-align:center;font-size:11.5px;color:var(--ink-faint);margin:18px 4px 0;}
+
+  /* ---------- Tela de sucesso ---------- */
+  .done{display:none;text-align:center;padding:54px 14px 40px;animation:fade .5s ease both;}
+  .done.show{display:block;}
+  .check{width:88px;height:88px;margin:0 auto 22px;border-radius:50%;
+    background:linear-gradient(140deg,var(--brand),var(--teal));display:flex;align-items:center;justify-content:center;
+    box-shadow:0 16px 40px -14px rgba(74,158,171,.8);}
+  .check svg{width:44px;height:44px;stroke:#0b1015;stroke-width:3.2;fill:none;
+    stroke-dasharray:40;stroke-dashoffset:40;animation:draw .55s .18s ease forwards;}
+  .done h2{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:30px;margin:0 0 10px;}
+  .done p{color:var(--ink-mut);font-size:15px;margin:0 auto;max-width:34ch;}
+  .done .again{margin-top:26px;background:none;border:1px solid var(--line);color:var(--ink-mut);
+    border-radius:10px;padding:10px 18px;font-family:inherit;font-size:13px;cursor:pointer;}
+  .done .again:hover{border-color:var(--brand);color:var(--ink);}
+
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .reveal{opacity:0;transform:translateY(14px);animation:fade .55s ease forwards;}
+  .reveal.d1{animation-delay:.05s;} .reveal.d2{animation-delay:.12s;}
+  .reveal.d3{animation-delay:.19s;} .reveal.d4{animation-delay:.26s;} .reveal.d5{animation-delay:.33s;}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    .check svg{stroke-dashoffset:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="form-view">
+
+  <header class="reveal d1">
+    <!-- Logo oficial MW (mesmo arquivo do site). Hospedando no próprio
+         domínio, você pode trocar a URL por caminho relativo: /images/logo-mw.png -->
+    <img class="logo-img" src="https://mwcomercialveterinaria.com.br/images/logo-mw.png"
+         alt="MW Comercial Veterinária — Distribuidor Zoetis e Urano">
+  </header>
+
+  <div class="hero reveal d2">
+    <p class="eyebrow">Pesquisa de satisfação</p>
+    <h1>Sua opinião <span class="hl">conta muito</span> pra gente.</h1>
+    <p>Leva menos de 1 minuto. Suas respostas ajudam a melhorar nosso atendimento em cada etapa — do pedido à entrega.</p>
+    <div class="meta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#6c7d8a" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      Rápida e confidencial · ~1 min
+    </div>
+  </div>
+
+  <!-- NPS -->
+  <div class="card reveal d3">
+    <p class="qlabel">De 0 a 10, o quanto você recomendaria a MW a um colega de profissão? <span class="req">*</span></p>
+    <p class="qhint">0 = não recomendaria · 10 = recomendaria com certeza</p>
+    <div class="nps-scale" id="nps" role="radiogroup" aria-label="Nota de 0 a 10"></div>
+    <div class="nps-ends"><span>Não recomendaria</span><span>Recomendaria muito</span></div>
+    <div class="nps-feedback" id="nps-fb"></div>
+  </div>
+
+  <!-- Áreas -->
+  <div class="card reveal d4">
+    <p class="qlabel">Como foi cada parte do nosso atendimento?</p>
+    <p class="qhint">Toque nas estrelas. Pule o que não se aplica a você.</p>
+    <div id="areas"></div>
+  </div>
+
+  <!-- Comentário -->
+  <div class="card reveal d5">
+    <label class="f" for="comentario">O que podemos melhorar — ou o que você mais gosta na MW?</label>
+    <textarea id="comentario" placeholder="Escreva à vontade (opcional)"></textarea>
+  </div>
+
+  <!-- Identificação / contato (vira destaque quando a nota é baixa) -->
+  <div class="card reveal d5" id="ident-card">
+    <p class="qlabel" id="ident-title" style="margin-bottom:4px;">Quer se identificar? <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">(opcional)</span></p>
+    <p class="qhint" id="ident-hint">Ajuda a gente a entender melhor o seu atendimento.</p>
+    <div class="grid2">
+      <div class="full" id="wa-field">
+        <label class="f" for="whatsapp">WhatsApp / telefone<span class="wa-badge">pra gente resolver</span></label>
+        <input type="tel" id="whatsapp" placeholder="(55) 99999-9999" autocomplete="tel" inputmode="tel">
+      </div>
+      <div class="full">
+        <label class="f" for="estabelecimento">Clínica / pet shop</label>
+        <input type="text" id="estabelecimento" placeholder="Nome do estabelecimento" autocomplete="organization">
+      </div>
+      <div>
+        <label class="f" for="cidade">Cidade</label>
+        <input type="text" id="cidade" placeholder="Sua cidade" autocomplete="address-level2">
+      </div>
+      <div>
+        <label class="f" for="representante">Representante</label>
+        <input type="text" id="representante" placeholder="Quem te atende">
+      </div>
+    </div>
+  </div>
+
+  <p class="privacy">Usamos suas respostas apenas para melhorar nosso serviço. · MW Comercial Veterinária</p>
+</div>
+
+<!-- Sucesso -->
+<div class="wrap done" id="done-view">
+  <div class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+  <h2>Recebemos sua avaliação!</h2>
+  <p>Muito obrigado por ajudar a MW a melhorar. Cada resposta é lida pela nossa equipe.</p>
+  <button class="again" id="restart">Enviar outra resposta</button>
+</div>
+
+<!-- Barra fixa de envio -->
+<div class="submitbar" id="submitbar">
+  <div class="inner">
+    <p class="errnote" id="errnote">Escolha uma nota de 0 a 10 para continuar.</p>
+    <button class="btn" id="send">
+      Enviar avaliação
+      <svg viewBox="0 0 24 24" fill="none" stroke="#091015" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+/* ---------------- Estado ---------------- */
+const state = { nps:null, areas:{}, };
+
+/* ---------------- Ícones das áreas ---------------- */
+const AREAS = [
+  {key:"atendimento", name:"Atendimento da equipe", sub:"Quem te visita e atende no dia a dia",
+   ic:'<path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20v-1a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v1" fill="none" stroke-width="2" stroke-linecap="round"/><path d="M16.5 5.3a3 3 0 0 1 0 5.4M19 20v-1a4 4 0 0 0-2.2-3.6" fill="none" stroke-width="2" stroke-linecap="round"/>'},
+  {key:"pedido", name:"Pedido e nota fiscal", sub:"Facilidade pra comprar e receber a nota",
+   ic:'<path d="M7 3h10l2 2v16l-3-2-2 2-2-2-2 2-3-2V5z" fill="none" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h3" stroke-width="2" stroke-linecap="round"/>'},
+  {key:"recebimento", name:"Como o pedido chegou", sub:"No prazo, produto certo e bem embalado",
+   ic:'<path d="M3 7l9-4 9 4v8l-9 4-9-4z" fill="none" stroke-width="2" stroke-linejoin="round"/><path d="M3 7l9 4 9-4M12 11v8M7.5 5l9 4" stroke-width="2" stroke-linejoin="round"/>'},
+  {key:"posvenda", name:"Suporte pós-venda", sub:"Dúvidas e suporte técnico depois da compra",
+   ic:'<path d="M4 13v-1a8 8 0 0 1 16 0v1" fill="none" stroke-width="2" stroke-linecap="round"/><rect x="2.5" y="13" width="4" height="6.5" rx="1.6" fill="none" stroke-width="2"/><rect x="17.5" y="13" width="4" height="6.5" rx="1.6" fill="none" stroke-width="2"/><path d="M20 19.5a3 3 0 0 1-3 3h-2.5" fill="none" stroke-width="2" stroke-linecap="round"/>'},
+  {key:"financeiro", name:"Boleto e cobrança", sub:"Clareza e organização do financeiro",
+   ic:'<rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke-width="2"/><path d="M7 6v12M11 6v12M15 6v12M18 6v12" stroke-width="1.6"/>'}
+];
+
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.4 6.1 21l1.2-6.5L2.5 9.9l6.6-.9z"/></svg>';
+
+/* ---------------- Monta a escala NPS ---------------- */
+const npsEl = document.getElementById('nps');
+const fbEl  = document.getElementById('nps-fb');
+for(let i=0;i<=10;i++){
+  const b=document.createElement('button');
+  b.type='button'; b.className='nps-btn'; b.textContent=i;
+  b.setAttribute('role','radio'); b.setAttribute('aria-checked','false');
+  b.setAttribute('aria-label', i+' de 10');
+  b.addEventListener('click',()=>setNps(i));
+  npsEl.appendChild(b);
+}
+function setNps(n){
+  state.nps=n;
+  [...npsEl.children].forEach((b,idx)=>{
+    b.classList.toggle('fill', idx<=n);
+    b.classList.toggle('sel', idx===n);
+    b.setAttribute('aria-checked', idx===n ? 'true':'false');
+  });
+  let msg='', col='var(--ice)';
+  if(n<=6){ msg='Sentimos muito. Deixe seu WhatsApp no fim que a gente entra em contato pra resolver.'; col='var(--bad)'; }
+  else if(n<=8){ msg='Obrigado! O que falta pra você nos dar um 10?'; col='var(--warn)'; }
+  else { msg='Que bom! Ficamos felizes em ter você com a gente. 💚'; col='var(--good)'; }
+  fbEl.textContent=msg; fbEl.style.color=col; fbEl.classList.add('show');
+  document.getElementById('errnote').classList.remove('show');
+
+  // Notas baixas: bloco de contato em destaque pra fechar o loop
+  const ident=document.getElementById('ident-card');
+  const lowScore = n<=6;
+  ident.classList.toggle('urgent', lowScore);
+  document.getElementById('ident-title').innerHTML = lowScore
+    ? 'Quer que a gente resolva? <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">deixe seu contato</span>'
+    : 'Quer se identificar? <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">(opcional)</span>';
+  document.getElementById('ident-hint').textContent = lowScore
+    ? 'A gente te liga pra entender o que aconteceu e corrigir. Seu contato fica só com a MW.'
+    : 'Ajuda a gente a entender melhor o seu atendimento.';
+}
+
+/* ---------------- Monta as áreas (estrelas) ---------------- */
+const areasEl=document.getElementById('areas');
+AREAS.forEach(a=>{
+  state.areas[a.key]=null;
+  const row=document.createElement('div'); row.className='area'; row.dataset.key=a.key;
+  row.innerHTML=
+    '<div class="area-ic"><svg viewBox="0 0 24 24" stroke="#7ca9b4" fill="none">'+a.ic+'</svg></div>'+
+    '<div class="area-name"><b>'+a.name+'</b><span class="sub">'+a.sub+'</span><button type="button" class="area-na">não usei</button></div>'+
+    '<div class="stars" role="radiogroup" aria-label="'+a.name+'"></div>';
+  const starsBox=row.querySelector('.stars');
+  for(let s=1;s<=5;s++){
+    const st=document.createElement('div');
+    st.className='star'; st.innerHTML=STAR; st.dataset.v=s;
+    st.setAttribute('role','radio'); st.setAttribute('tabindex','0');
+    st.setAttribute('aria-label', s+' estrela'+(s>1?'s':''));
+    const set=()=>setStars(a.key,s,row);
+    st.addEventListener('click',set);
+    st.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter'){e.preventDefault();set();}});
+    starsBox.appendChild(st);
+  }
+  row.querySelector('.area-na').addEventListener('click',(e)=>{
+    const on=row.classList.toggle('na');
+    e.target.classList.toggle('on',on);
+    if(on){ state.areas[a.key]='N/A'; row.querySelectorAll('.star').forEach(x=>x.classList.remove('lit')); }
+    else { state.areas[a.key]=null; }
+  });
+  areasEl.appendChild(row);
+});
+function setStars(key,val,row){
+  if(row.classList.contains('na')){ row.classList.remove('na'); row.querySelector('.area-na').classList.remove('on'); }
+  state.areas[key]=val;
+  row.querySelectorAll('.star').forEach(st=>st.classList.toggle('lit', +st.dataset.v<=val));
+}
+
+/* ---------------- Envio ---------------- */
+const sendBtn=document.getElementById('send');
+const errnote=document.getElementById('errnote');
+const isConfigured = ()=> !GOOGLE_FORM.actionUrl.includes('COLE_SEU_ID');
+
+sendBtn.addEventListener('click', async ()=>{
+  if(state.nps===null){
+    errnote.classList.add('show');
+    document.querySelector('.card').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  sendBtn.disabled=true; sendBtn.firstChild.textContent='Enviando… ';
+
+  const dados={
+    nps: state.nps,
+    comentario: document.getElementById('comentario').value.trim(),
+    estabelecimento: document.getElementById('estabelecimento').value.trim(),
+    cidade: document.getElementById('cidade').value.trim(),
+    representante: document.getElementById('representante').value.trim(),
+    whatsapp: document.getElementById('whatsapp').value.trim()
+  };
+  AREAS.forEach(a=>{ const v=state.areas[a.key]; if(v!==null) dados[a.key]=v; });
+
+  try{
+    if(isConfigured()){
+      const fd=new FormData();
+      for(const [k,entry] of Object.entries(GOOGLE_FORM.fields)){
+        if(dados[k]!==undefined && dados[k]!=='' ) fd.append(entry, dados[k]);
+      }
+      await fetch(GOOGLE_FORM.actionUrl,{method:'POST',mode:'no-cors',body:fd});
+    } else {
+      console.warn('[MW] Modo de teste: Google Forms ainda não configurado. Respostas capturadas:', dados);
+      await new Promise(r=>setTimeout(r,500));
+    }
+  }catch(err){
+    console.error('[MW] Falha no envio:',err);
+  }
+  showDone();
+});
+
+function showDone(){
+  document.getElementById('form-view').style.display='none';
+  document.getElementById('submitbar').style.display='none';
+  const d=document.getElementById('done-view'); d.classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('restart').addEventListener('click',()=>location.reload());
+</script>
+</body>
+</html>
