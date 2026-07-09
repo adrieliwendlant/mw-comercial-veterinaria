@@ -95,15 +95,11 @@
   /* Bloco de contato em destaque (notas baixas) */
   #ident-card{transition:border-color .3s ease,background .3s ease,box-shadow .3s ease;}
   #ident-card.urgent{
-    border-color:rgba(230,181,102,.55);
-    background:linear-gradient(180deg,rgba(230,181,102,.10),#161b22);
-    box-shadow:0 18px 50px -22px rgba(0,0,0,.75), inset 0 0 0 1px rgba(230,181,102,.18);
+    border-color:rgba(124,169,180,.45);
+    background:linear-gradient(180deg,rgba(124,169,180,.07),#161b22);
+    box-shadow:0 18px 50px -22px rgba(0,0,0,.75), inset 0 0 0 1px rgba(124,169,180,.14);
   }
-  #ident-card.urgent #ident-title{color:var(--warn);}
-  #ident-card.urgent #wa-field input{border-color:rgba(230,181,102,.6);background:rgba(230,181,102,.06);}
-  .wa-badge{display:none;font-size:11px;font-weight:600;color:#1a1410;background:var(--warn);
-            border-radius:6px;padding:2px 7px;margin-left:7px;vertical-align:middle;}
-  #ident-card.urgent .wa-badge{display:inline-block;}
+  #ident-card.urgent #wa-field input{border-color:rgba(124,169,180,.5);}
 
   /* ---------- Escala NPS ---------- */
   .nps-scale{display:grid;grid-template-columns:repeat(11,1fr);gap:5px;margin-top:4px;}
@@ -250,7 +246,7 @@
     <p class="qhint" id="ident-hint">Ajuda a gente a entender melhor o seu atendimento.</p>
     <div class="grid2">
       <div class="full" id="wa-field">
-        <label class="f" for="whatsapp">WhatsApp / telefone<span class="wa-badge">pra gente resolver</span></label>
+        <label class="f" for="whatsapp">WhatsApp / telefone</label>
         <input type="tel" id="whatsapp" placeholder="(55) 99999-9999" autocomplete="tel" inputmode="tel">
       </div>
       <div class="full">
@@ -329,7 +325,7 @@ function setNps(n){
     b.setAttribute('aria-checked', idx===n ? 'true':'false');
   });
   let msg='', col='var(--ice)';
-  if(n<=6){ msg='Sentimos muito. Deixe seu WhatsApp no fim que a gente entra em contato pra resolver.'; col='var(--bad)'; }
+  if(n<=6){ msg='Entraremos em contato para entender o que aconteceu.'; col='var(--bad)'; }
   else if(n<=8){ msg='Obrigado! O que falta pra você nos dar um 10?'; col='var(--warn)'; }
   else { msg='Que bom! Ficamos felizes em ter você com a gente. 💚'; col='var(--good)'; }
   fbEl.textContent=msg; fbEl.style.color=col; fbEl.classList.add('show');
@@ -340,10 +336,10 @@ function setNps(n){
   const lowScore = n<=6;
   ident.classList.toggle('urgent', lowScore);
   document.getElementById('ident-title').innerHTML = lowScore
-    ? 'Quer que a gente resolva? <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">deixe seu contato</span>'
+    ? 'Deixe seu contato <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">para retorno</span>'
     : 'Quer se identificar? <span style="font-weight:400;color:var(--ink-faint);font-size:13px;">(opcional)</span>';
   document.getElementById('ident-hint').textContent = lowScore
-    ? 'A gente te liga pra entender o que aconteceu e corrigir. Seu contato fica só com a MW.'
+    ? 'Assim conseguimos retornar a você. Seu contato fica só com a MW.'
     : 'Ajuda a gente a entender melhor o seu atendimento.';
 }
 
