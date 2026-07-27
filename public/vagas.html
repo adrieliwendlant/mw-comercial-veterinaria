@@ -54,6 +54,7 @@ a{color:inherit;text-decoration:none}
 .btn{background:var(--teal);color:#fff;border:none;font-weight:700;font-size:14.5px;padding:11px 18px;border-radius:10px;cursor:pointer;white-space:nowrap}
 .btn:hover{background:var(--tealdk)}
 .btn.gold{background:var(--gold)}.btn.gold:hover{background:#b3852f}
+.btn.orange{background:#e8590c}.btn.orange:hover{background:#cf4d09}
 .btn.ghost{background:transparent;color:var(--ink2);border:1px solid var(--line)}
 /* footer */
 .foot0{background:#20363a;color:#bcd0d1;padding:26px 0;font-size:13px}
@@ -221,7 +222,7 @@ function cardHTML(v,talent){
   <div class="loc">📍 ${v.loc}</div><div class="area">${v.area}</div>
   <ul>${v.req.map(r=>`<li>${r}</li>`).join('')}</ul>
   <div class="foot"><div class="tags">${v.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-   <button class="btn ${talent?'gold':''}" data-v="${v.id}">${talent?'Enviar currículo':'Candidatar-se'}</button></div>
+   <button class="btn ${talent?'gold':(v.brand==='zoetis'?'orange':'')}" data-v="${v.id}">${talent?'Enviar currículo':'Candidatar-se'}</button></div>
  </div>`;
 }
 function render(){
