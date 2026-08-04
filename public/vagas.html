@@ -150,9 +150,9 @@ select.stsel{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font
         <div class="field"><label>E-mail *</label><input name="email" type="email" required></div>
         <div class="field"><label>WhatsApp / Telefone *</label><input name="telefone" required></div>
       </div>
-      <div class="row2">
+      <div class="row2" id="row2Loc">
         <div class="field"><label>Cidade onde mora *</label><input name="cidade" required></div>
-        <div class="field"><label id="expAreaLbl">Experiência em banho e tosa?</label><select name="exp_area"><option>Não</option><option>Um pouco</option><option>Sim</option></select></div>
+        <div class="field" id="expAreaField"><label id="expAreaLbl">Experiência em banho e tosa?</label><select name="exp_area"><option>Não</option><option>Um pouco</option><option>Sim</option></select></div>
       </div>
       <div class="field"><label>Experiência na área comercial (vendas/representação)?</label><select name="comercial"><option>Não</option><option>Um pouco</option><option>Sim</option></select></div>
       <div class="field"><label>Vaga *</label><select name="vaga" id="mVaga" required></select></div>
@@ -219,13 +219,19 @@ function openModal(vid){
  $("#mTitle").textContent = v.tipo==='Banco de Talentos'?'Deixe seu currículo':(v.tipo+' — '+v.loc);
  $("#formMsg").className="msg"; $("#appForm").reset(); resetFile();
  $("#mVaga").value = v.id;
- const isZ = v.brand==='zoetis';
- $("#expAreaLbl").textContent = isZ ? 'Experiência em clínica veterinária?' : 'Experiência em banho e tosa?';
+ aplicarVaga(v);
  $("#demoFlag").style.display = REAL? 'none':'block';
  $("#mask").classList.add("on");
 }
+function ehTalento(v){return v && (v.id==='banco' || v.tipo==='Banco de Talentos');}
+function aplicarVaga(v){
+ const talento=ehTalento(v), z=v&&v.brand==='zoetis';
+ $("#expAreaField").style.display = talento ? 'none' : '';
+ $("#row2Loc").style.gridTemplateColumns = talento ? '1fr' : '';
+ $("#expAreaLbl").textContent = z ? 'Experiência em clínica veterinária?' : 'Experiência em banho e tosa?';
+}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)openModal(b.dataset.v);});
-$("#mVaga").onchange=()=>{const v=ALL.find(x=>x.id===$("#mVaga").value);$("#expAreaLbl").textContent=(v&&v.brand==='zoetis')?'Experiência em clínica veterinária?':'Experiência em banho e tosa?';};
+$("#mVaga").onchange=()=>aplicarVaga(ALL.find(x=>x.id===$("#mVaga").value));
 $("#mx").onclick=()=>$("#mask").classList.remove("on");
 $("#mask").onclick=e=>{if(e.target===$("#mask"))$("#mask").classList.remove("on");};
 
@@ -237,11 +243,12 @@ $("#appForm").onsubmit=ev=>{
  ev.preventDefault();
  if(!cvFile){toast("Anexe seu currículo em PDF.");return;}
  const fd=new FormData(ev.target); const vid=fd.get("vaga");
- const vv=ALL.find(x=>x.id===vid); const isZ=vv&&vv.brand==='zoetis';
- const expLabel=isZ?'Clínica veterinária':'Banho e tosa';
+ const vv=ALL.find(x=>x.id===vid); const isZ=vv&&vv.brand==='zoetis'; const isTal=ehTalento(vv);
+ const expLabel=isTal?'':(isZ?'Clínica veterinária':'Banho e tosa');
+ const expVal=isTal?'':fd.get("exp_area");
  const data={nome:fd.get("nome"),email:fd.get("email"),telefone:fd.get("telefone"),cidade:fd.get("cidade"),
-             exp_area_label:expLabel,exp_area:fd.get("exp_area"),comercial:fd.get("comercial"),
-             banho_tosa:fd.get("exp_area"),mensagem:fd.get("mensagem"),vaga_id:vid,vaga_titulo:vagaLabel(vid)};
+             exp_area_label:expLabel,exp_area:expVal,comercial:fd.get("comercial"),
+             banho_tosa:expVal,mensagem:fd.get("mensagem"),vaga_id:vid,vaga_titulo:vagaLabel(vid)};
  $("#sendBtn").disabled=true; $("#sendBtn").textContent="Enviando…";
  const finish=(ok,msg)=>{ $("#sendBtn").disabled=false; $("#sendBtn").textContent="Enviar candidatura";
    if(ok){$("#mask").classList.remove("on");toast("Candidatura enviada com sucesso! 🎉");}
