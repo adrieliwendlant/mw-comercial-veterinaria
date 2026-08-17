@@ -92,7 +92,12 @@ async function carregar(){
     if (EVENTO){
       // preserva os check-ins feitos aqui e os walk-ins
       var feitos = {}, walk = [];
+      // Se a gestão zerou os check-ins, o que está salvo neste aparelho é anterior
+      // ao reset e não pode voltar — senão o celular "ressuscita" tudo ao abrir.
+      var reset = doServidor.checkinResetAt ? Date.parse(doServidor.checkinResetAt) : 0;
       EVENTO.participantes.forEach(function(p){
+        var quando = p.checkinAt ? Date.parse(p.checkinAt) : 0;
+        if (reset && (!quando || quando < reset)) return;      // descarta o antigo
         if (p.checkin) feitos[p.id] = p.checkinAt || new Date().toISOString();
         if (p.walkIn && !doServidor.participantes.some(function(x){ return x.id === p.id; })) walk.push(p);
       });
@@ -129,8 +134,18 @@ function parseCSV(txt){
 async function puxarForms(){
   if (!EVENTO || !EVENTO.formsUrl) return;
   try{
-    var r = await fetch(EVENTO.formsUrl + (EVENTO.formsUrl.indexOf('?')>=0?'&':'?') + '_=' + Date.now(), {cache:'no-store'});
-    var txt = await r.text();
+    // O Google não libera CORS no CSV publicado: tenta direto e cai pra ponte do servidor.
+    var txt = null;
+    try{
+      var r = await fetch(EVENTO.formsUrl + (EVENTO.formsUrl.indexOf('?')>=0?'&':'?') + '_=' + Date.now(), {cache:'no-store'});
+      if (r.ok) txt = await r.text();
+    }catch(e){}
+    if (txt == null){
+      var r2 = await fetch(API + 'campo.php?tipo=forms&ev=' + encodeURIComponent(EV_ID) + '&k=' + encodeURIComponent(CHAVE) +
+        '&url=' + encodeURIComponent(EVENTO.formsUrl) + '&_=' + Date.now(), {cache:'no-store'});
+      if (!r2.ok) return;
+      txt = await r2.text();
+    }
     if (/<html/i.test(txt.slice(0,300))) return;
     var rows = parseCSV(txt); if (rows.length < 2) return;
     var h = rows[0].map(norm);
