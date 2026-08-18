@@ -28,7 +28,7 @@
   .item.ok{background:rgba(62,140,104,.09)}
   .bolha{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
          background:#eef2f4;color:var(--muted)}
-  .item.ok .bolha{background:var(--good);color:#fff}
+  .item.ok .bolha{background:var(--good);color:#fff;font-size:15px;font-weight:800}
   .nome{font-weight:700;font-size:15px}
   .sub{font-size:11.5px;color:var(--muted);margin-top:1px}
   .tagconf{font-size:9.5px;color:var(--good);font-weight:700;border:1px solid var(--good);border-radius:4px;padding:1px 5px}
@@ -260,7 +260,21 @@ function processarQR(txt){
   p.checkin = true; p.checkinAt = new Date().toISOString();
   salvarLocal(); render(); enviar(true);
   if (navigator.vibrate) navigator.vibrate([50,40,50]);
-  msg.textContent = '✓ ' + p.nomeContato + ' — check-in feito!';
+  var n = numeroSorteio(p.id);
+  msg.innerHTML = '✓ ' + esc(p.nomeContato) + ' — check-in feito!'
+    + (n ? '<div style="font-size:26px;font-weight:800;margin-top:6px">nº ' + n + ' <span style="font-size:12px;font-weight:600;opacity:.8">para o sorteio</span></div>' : '');
+}
+
+// Número do sorteio = ordem de chegada. Calculado na hora pelo horário do check-in,
+// então dois aparelhos na porta nunca dão o mesmo número à mesma pessoa.
+function numeroSorteio(pId){
+  if (!EVENTO) return 0;
+  var ordem = EVENTO.participantes.filter(function(p){ return p.checkin; })
+    .sort(function(a,b){
+      var c = String(a.checkinAt||'').localeCompare(String(b.checkinAt||''));
+      return c || String(a.id).localeCompare(String(b.id)); });
+  for (var i=0;i<ordem.length;i++){ if (ordem[i].id === pId) return i+1; }
+  return 0;
 }
 
 // ---------- render ----------
@@ -301,7 +315,7 @@ function render(){
     '</div>' +
     '<div class="lista">' + (vis.length ? vis.map(function(p){
       return '<div class="item' + (p.checkin?' ok':'') + '" onclick="alternar(\'' + p.id + '\')">' +
-        '<div class="bolha">' + (p.checkin ? '✓' : '○') + '</div>' +
+        '<div class="bolha">' + (p.checkin ? (numeroSorteio(p.id) || '✓') : '○') + '</div>' +
         '<div style="flex:1;min-width:0">' +
           '<div class="nome">' + esc(p.nomeContato || p.atua || '—') + '</div>' +
           '<div class="sub">' + esc(p.atua || '') + (p.cidade ? ' · ' + esc(p.cidade) : '') + (p.walkIn ? ' · chegou na hora' : '') + '</div>' +
