@@ -289,8 +289,22 @@ function render(){
     return (a.nomeContato||'').localeCompare(b.nomeContato||''); });
   var presentes = ps.filter(function(p){ return p.checkin; }).length;
   var bN = norm(busca);
-  var vis = bN ? ps.filter(function(p){ return norm((p.nomeContato||'')+' '+(p.atua||'')+' '+(p.cidade||'')).indexOf(bN) >= 0; })
-               : (soFalta ? ps.filter(function(p){ return !p.checkin; }) : ps);
+  // Busca pelo NÚMERO de chegada: na hora do sorteio a equipe tem o número na mão
+  // e precisa achar quem é. Só dígitos = procura pelo número, senão nome/clínica.
+  var soNumero = /^\s*\d{1,4}\s*$/.test(busca);
+  var numBusca = soNumero ? String(parseInt(busca,10)) : '';
+  var vis;
+  var porTexto = function(p){ return norm((p.nomeContato||'')+' '+(p.atua||'')+' '+(p.cidade||'')).indexOf(bN) >= 0; };
+  if (soNumero){
+    // número é número: buscar "3" não pode trazer quem tem "39" na cidade.
+    vis = ps.filter(function(p){ return p.checkin && String(numeroSorteio(p.id)) === numBusca; });
+    // se nenhum número bater, cai pro texto (clínica com número no nome, por ex.)
+    if (!vis.length) vis = ps.filter(porTexto);
+  } else if (bN){
+    vis = ps.filter(porTexto);
+  } else {
+    vis = soFalta ? ps.filter(function(p){ return !p.checkin; }) : ps;
+  }
   var dataBR = /^\d{4}-\d{2}-\d{2}$/.test(EVENTO.data||'') ? EVENTO.data.split('-').reverse().join('/') : '';
 
   document.getElementById('app').innerHTML =
@@ -302,7 +316,7 @@ function render(){
         '<div><b style="color:var(--good)">' + presentes + '</b><span style="color:var(--muted)">presentes</span></div>' +
         '<div><b style="color:var(--warn)">' + (ps.length - presentes) + '</b><span style="color:var(--muted)">faltam</span></div>' +
       '</div>' +
-      '<input class="busca" id="q" placeholder="🔎 Buscar nome ou clínica…" value="' + esc(busca) + '">' +
+      '<input class="busca" id="q" placeholder="🔎 Buscar nome, clínica ou nº do sorteio" value="' + esc(busca) + '">' +
       '<div class="acoes">' +
         '<button class="btn" onclick="abrirScanner()">📷 Ler QR</button>' +
         '<button class="btn ghost" onclick="carregar()">🔄 Atualizar</button>' +
@@ -322,7 +336,7 @@ function render(){
         '</div>' +
         (p.confirmou ? '<span class="tagconf">CONFIRMOU</span>' : '') +
       '</div>';
-    }).join('') : '<div class="vazio">' + (bN ? 'Ninguém encontrado nessa busca.' : 'Todos já fizeram check-in! 🎉') + '</div>') + '</div>' +
+    }).join('') : '<div class="vazio">' + (soNumero ? ('Ninguém com o número ' + numBusca + ' ainda.') : (bN ? 'Ninguém encontrado nessa busca.' : 'Todos já fizeram check-in! 🎉')) + '</div>') + '</div>' +
     '<div class="rodape" id="sync"><span class="pt"></span><span>pronto</span></div>';
 
   var q = document.getElementById('q');
