@@ -258,9 +258,11 @@ $("#appForm").onsubmit=ev=>{
    try{
      const b64=String(rd.result).split(",")[1];
      const payload={...data, filename:cvFile.name, mimetype:cvFile.type||"application/pdf", filedata:b64};
-     if(REAL){ await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}); }
+     const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+     const out=await res.json().catch(()=>null);
+     if(!out||!out.ok) throw new Error((out&&out.error)||"falha ao gravar");
      finish(true);
-   }catch(e){ finish(false,"Não foi possível enviar agora. Verifique a conexão e tente de novo."); }
+   }catch(e){ finish(false,"⚠️ Não foi possível enviar sua candidatura agora. Tente novamente em instantes — ou, se preferir, envie seu currículo direto para adrieli@mwcomercialveterinaria.com.br que a gente recebe por lá."); }
  };
  rd.onerror=()=>finish(false,"Não foi possível ler o arquivo.");
  rd.readAsDataURL(cvFile);
