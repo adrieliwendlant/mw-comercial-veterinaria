@@ -24,6 +24,11 @@ body{min-height:100vh;font-family:'Montserrat','Helvetica Neue',Arial,sans-serif
   text-decoration:none;transition:transform .12s ease, box-shadow .12s ease, background .12s ease}
 .lnk .ico{font-size:19px;line-height:1}
 .lnk.primary{background:#7CA9B4;color:#25303a}
+/* Evento em cartaz: laranja da campanha para puxar o olho antes dos demais.
+   Ao encerrar as inscrições, basta apagar esta linha e o <a class="lnk evento">. */
+.lnk.evento{background:#E8632A;color:#fff;flex-direction:column;gap:3px;padding:15px 18px}
+.lnk.evento:hover{background:#f0723a}
+.lnk.evento .quando{font-size:12.5px;font-weight:600;opacity:.95}
 .lnk.primary:hover{background:#8bb6c0}
 .lnk.white{background:#fff;color:#3a3f48}
 .lnk.white:hover{background:#eef3f4}
@@ -37,7 +42,8 @@ body{min-height:100vh;font-family:'Montserrat','Helvetica Neue',Arial,sans-serif
     <div class="name">MW Comercial Veterinária</div>
     <div class="tag">Rio Grande do Sul</div>
     <div class="links">
-      <a class="lnk primary" href="https://mwcomercialveterinaria.com.br/vagas"><span class="ico">💼</span> Trabalhe conosco — Vagas</a>
+      <a class="lnk evento" href="https://mwcomercialveterinaria.com.br/inscricao.html?ev=ev1788804415162&k=ec9a7744f8dec86ee321790291ee082d"><span><span class="ico">🎟</span> Derma Experience 2026</span><span class="quando">22/09 · 19h · Santa Maria — confirme sua presença</span></a>
+      <a class="lnk white" href="https://mwcomercialveterinaria.com.br/vagas"><span class="ico">💼</span> Trabalhe conosco — Vagas</a>
       <a class="lnk white" href="https://mwcomercialveterinaria.com.br"><span class="ico">🌐</span> Nosso site</a>
       <a class="lnk white" href="https://wa.me/555535123085?text=Ol%C3%A1!%20Vim%20pelo%20Instagram%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><span class="ico">💬</span> WhatsApp</a>
     </div>
