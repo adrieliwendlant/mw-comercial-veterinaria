@@ -245,7 +245,7 @@ async function carregar(){
     return;
   }
   try{
-    const r = await fetch(api + '?tipo=eventos&ev=' + encodeURIComponent(EV_ID) + '&k=' + encodeURIComponent(EV_K));
+    const r = await fetch(api + '?tipo=' + (new URLSearchParams(location.search).get('publico') === '1' ? 'evento_publico' : 'eventos') + '&ev=' + encodeURIComponent(EV_ID) + '&k=' + encodeURIComponent(EV_K));
     const j = await r.json();
     if (!r.ok || !j.ok || !j.evento) throw new Error(j.error || 'não encontrei este evento');
     EVENTO = j.evento;
@@ -270,8 +270,12 @@ function montarTela(){
     $('verInteiro').style.display = 'block';
   }
   $('evNome').textContent = EVENTO.nome || 'Inscrição';
-  $('evQuando').textContent = dataBR(EVENTO.data) + (EVENTO.local ? ' · ' + EVENTO.local : '');
-  $('form').style.display = 'block';
+  $('evQuando').textContent = dataBR(EVENTO.data) + (EVENTO.horario ? ' · ' + EVENTO.horario : '') + (EVENTO.local ? ' · ' + EVENTO.local : '');
+  $('form').style.display = EVENTO.inscricoesAbertas === false ? 'none' : 'block';
+  if (EVENTO.inscricoesAbertas === false) {
+    $('carregando').textContent = 'Inscrições encerradas para este evento.';
+    $('carregando').style.display = 'block';
+  }
   document.title = (EVENTO.nome || 'Inscrição') + ' · MW';
 }
 function dataBR(d){
