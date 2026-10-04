@@ -5,6 +5,7 @@ import {
   Mail, Clock, Truck, Sun, Headphones, Check, Send, MessageCircle,
   ShoppingBag, Trash2, ArrowRight, ExternalLink, User, BookOpen,
 } from 'lucide-react';
+import SEO from './seo.json';
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
 const t = {
@@ -110,7 +111,6 @@ const IMG = {
     ana_luiza:   process.env.PUBLIC_URL+'/images/team/ana-luiza.jpg',
     camila:      process.env.PUBLIC_URL+'/images/team/camila.jpg',
     laura:       process.env.PUBLIC_URL+'/images/team/laura.jpg',
-    gabrieli:    process.env.PUBLIC_URL+'/images/team/gabrieli.jpg',
     ana_karoline:process.env.PUBLIC_URL+'/images/team/ana-karoline.jpg',
     andreas:     process.env.PUBLIC_URL+'/images/team/andreas.jpg',
     andryara:    process.env.PUBLIC_URL+'/images/team/andryara.jpg',
@@ -216,11 +216,11 @@ const PRODUCTS = [
 const TEAM = [
   { id:1,  name:'Marcos Wendlant',            role:'Proprietário',           tier:'leadership',   region:null,                                   phone:'(55) 9 9962-5124', initials:'MW', hidePhone:true,  photo: IMG.team.marcos   },
   { id:2,  name:'Adrieli Wendlant',            role:'Gerente',                tier:'leadership',   region:null,                                   phone:'(55) 9 9999-8055', initials:'AW', hidePhone:true,  photo: IMG.team.adrieli  },
-  { id:3,  name:'Taysa da Silva Caye',         role:'Coordenadora Técnica',   tier:'coordination', region:null,                                   phone:'(55) 9 9693-8002', initials:'TC', hidePhone:true,  photo: IMG.team.taysa    },
+  { id:3,  name:'Taysa da Silva Caye',         role:'Coordenadora Comercial', tier:'coordination', region:null,                                   phone:'(55) 9 9693-8002', initials:'TC', hidePhone:true,  photo: IMG.team.taysa    },
   { id:4,  name:'Bibiana Reis',                role:'Coordenadora Comercial', tier:'coordination', region:'Região de Santa Maria',                phone:'(55) 9 9155-3064', initials:'BR', hidePhone:true,  photo: IMG.team.bibiana  },
-  { id:5,  name:'Kauana Pazzini',              role:'Coordenadora Comercial', tier:'coordination', region:'Região de Passo Fundo',                phone:'(54) 9 9656-6684', initials:'KP', hidePhone:true,  photo: IMG.team.kauana   },
   { id:6,  name:'Ana Luiza Menegatti',         role:'Promotora Técnica',      tier:'promoters',    region:'Rio Grande do Sul',                    phone:'(54) 9 9933-3133', initials:'AM', photo: IMG.team.ana_luiza },
   { id:7,  name:'Camila Ribas',                role:'Promotora Técnica',      tier:'promoters',    region:'Rio Grande do Sul',                    phone:'(55) 9 9657-4230', initials:'CR', photo: IMG.team.camila   },
+  { id:5,  name:'Kauana Pazzini',              role:'Promotora Técnica',      tier:'promoters',    region:'Região de Passo Fundo',                phone:'(54) 9 9656-6684', initials:'KP', photo: IMG.team.kauana   },
   { id:8,  name:'Laura Spode de Arruda',       role:'Promotora Técnica',      tier:'promoters',    region:'Rio Grande do Sul',                    phone:'(55) 9 9679-6677', initials:'LA', photo: IMG.team.laura    },
   { id:9,  name:'Ana Karoline Severo',         role:'Representante Comercial',tier:'reps',         region:'Região de Cachoeira do Sul',           phone:'(55) 9 9129-7759', initials:'AK', photo: IMG.team.ana_karoline },
   { id:10, name:'Andreas Basso Dalaqua',       role:'Representante Comercial',tier:'reps',         region:'Região de Santa Cruz do Sul',          phone:'(51) 9 9981-7846', initials:'AD', photo: IMG.team.andreas },
@@ -234,7 +234,6 @@ const TEAM = [
   { id:18, name:'Newton Luis Bareta',          role:'Representante Comercial',tier:'reps',         region:'Região de Vacaria',                    phone:'(54) 9 9938-3253', initials:'NB', photo: IMG.team.newton },
   { id:19, name:'Sabrina Lopes de Oliveira',   role:'Representante Comercial',tier:'reps',         region:'Região de Bagé / Santana do Livramento',phone:'(55) 9 9654-9020', initials:'SO', photo: IMG.team.sabrina },
   { id:20, name:'Virginia Bensch Raffaelli',   role:'Representante Comercial',tier:'reps',         region:'Região de Ijuí',                       phone:'(41) 9 9616-3928', initials:'VR', photo: IMG.team.virginia },
-  { id:21, name:'Gabrieli Proença',            role:'Estagiária Curricular',  tier:'interns',      region:'Região de Passo Fundo',                phone:'(54) 9 9162-6817', initials:'GP', photo: IMG.team.gabrieli },
   { id:22, name:'Claudia Machado',        role:'Administrativo / Financeiro', tier:'internal', region:null, phone:null, initials:'CM', photo: IMG.team.claudia_machado },
   { id:23, name:'Jeferson Przibilowicz',  role:'Estoque',              tier:'internal', region:null, phone:null, initials:'JP', photo: IMG.team.jeferson },
   { id:24, name:'Rafael Wildner',         role:'Auxiliar de Estoque',  tier:'internal', region:null, phone:null, initials:'RW', photo: IMG.team.rafael },
@@ -377,20 +376,39 @@ function MWLogoFooter() {
   return <MWLogo />;
 }
 
+/* ─── ROTAS ──────────────────────────────────────────────────────── */
+// Cada seção tem endereço próprio para o Google encontrar.
+// Endereços, títulos e descrições ficam em seo.json (o scripts/prerender.js lê o mesmo arquivo).
+const ROUTES = Object.fromEntries(Object.entries(SEO).map(([k, v]) => [k, v.path]));
+const pageFromPath = () => {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  return Object.keys(ROUTES).find(k => (ROUTES[k].replace(/\/+$/, '') || '/') === path) || 'home';
+};
+// Página já veio pré-montada no HTML: pula a tela de abertura
+const PRERENDERED = typeof document !== 'undefined' && !!document.getElementById('root')?.hasChildNodes();
+
 /* ─── APP ────────────────────────────────────────────────────────── */
 export default function MWSite() {
-  const [page, setPage]               = useState('home');
+  const [page, setPage]               = useState(pageFromPath);
   const [mobileMenu, setMobileMenu]   = useState(false);
   const [quoteItems, setQuoteItems]   = useState([]);
   const [quoteOpen, setQuoteOpen]     = useState(false);
-  const [splash, setSplash]           = useState(true);
+  const [splash, setSplash]           = useState(!PRERENDERED);
 
   React.useEffect(() => {
     const timer = setTimeout(() => setSplash(false), 2400);
     return () => clearTimeout(timer);
   }, []);
 
-  const navigate = (p) => { setPage(p); setMobileMenu(false); setQuoteOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); };
+  React.useEffect(() => { if (SEO[page]) document.title = SEO[page].title; }, [page]);
+
+  React.useEffect(() => {
+    const onBack = () => setPage(pageFromPath());
+    window.addEventListener('popstate', onBack);
+    return () => window.removeEventListener('popstate', onBack);
+  }, []);
+
+  const navigate = (p) => { if (ROUTES[p] && window.location.pathname !== ROUTES[p]) window.history.pushState({}, '', ROUTES[p]); setPage(p); setMobileMenu(false); setQuoteOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); };
 
   const addToQuote    = (id) => setQuoteItems(prev => { const ex = prev.find(i => i.id === id); return ex ? prev.map(i => i.id === id ? { ...i, qty: i.qty+1 } : i) : [...prev,{id,qty:1}]; });
   const removeFromQuote = (id) => setQuoteItems(prev => prev.filter(i => i.id !== id));

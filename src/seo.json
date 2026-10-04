@@ -1,0 +1,27 @@
+{
+  "home": {
+    "path": "/",
+    "title": "MW Comercial Veterinária — Distribuidor Zoetis e Urano no RS",
+    "description": "Distribuidor autorizado Zoetis e Urano no Rio Grande do Sul. Há mais de 40 anos levando produtos veterinários de qualidade com agilidade e suporte técnico especializado."
+  },
+  "about": {
+    "path": "/sobre/",
+    "title": "Sobre a MW — 40 anos de distribuição veterinária no RS",
+    "description": "Conheça a MW Comercial Veterinária: mais de 40 anos distribuindo Zoetis e Urano para clínicas, hospitais veterinários e pet shops do Rio Grande do Sul, com entrega rápida e suporte técnico."
+  },
+  "products": {
+    "path": "/produtos/",
+    "title": "Produtos Zoetis e Urano para cães e gatos | MW Comercial Veterinária",
+    "description": "Antiparasitários, dermatologia, vacinas, analgésicos, anestésicos e testes diagnósticos Zoetis e Urano para cães e gatos. Distribuição para clínicas e pet shops no RS."
+  },
+  "team": {
+    "path": "/equipe/",
+    "title": "Equipe e representantes por região no RS | MW Comercial Veterinária",
+    "description": "Representantes comerciais e promotoras técnicas da MW em Santa Maria, Passo Fundo, Santa Cruz do Sul, Erechim, Vacaria, Ijuí, Santa Rosa, Bagé, Uruguaiana, Frederico Westphalen e região."
+  },
+  "contact": {
+    "path": "/contato/",
+    "title": "Contato e representante da sua cidade | MW Comercial Veterinária",
+    "description": "Fale com a MW Comercial Veterinária: (55) 3512-3085, Av. Tuparendi, 1795, Santa Rosa/RS. Encontre o representante que atende a sua cidade."
+  }
+}
