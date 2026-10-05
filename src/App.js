@@ -214,7 +214,7 @@ const PRODUCTS = [
 
 /* ─── EQUIPE ─────────────────────────────────────────────────────── */
 const TEAM = [
-  { id:1,  name:'Marcos Wendlant',            role:'Proprietário',           tier:'leadership',   region:null,                                   phone:'(55) 9 9962-5124', initials:'MW', hidePhone:true,  photo: IMG.team.marcos   },
+  { id:1,  name:'Marcos Wendlant',            role:'Diretor',                tier:'leadership',   region:null,                                   phone:'(55) 9 9962-5124', initials:'MW', hidePhone:true,  photo: IMG.team.marcos   },
   { id:2,  name:'Adrieli Wendlant',            role:'Gerente',                tier:'leadership',   region:null,                                   phone:'(55) 9 9999-8055', initials:'AW', hidePhone:true,  photo: IMG.team.adrieli  },
   { id:3,  name:'Taysa da Silva Caye',         role:'Coordenadora Comercial', tier:'coordination', region:'Região de Passo Fundo',                phone:'(55) 9 9693-8002', initials:'TC', hidePhone:true,  photo: IMG.team.taysa    },
   { id:4,  name:'Bibiana Reis',                role:'Coordenadora Comercial', tier:'coordination', region:'Região de Santa Maria',                phone:'(55) 9 9155-3064', initials:'BR', hidePhone:true,  photo: IMG.team.bibiana  },
