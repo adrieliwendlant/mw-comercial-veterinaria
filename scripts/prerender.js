@@ -121,7 +121,7 @@ function write(rel, content) {
   write('404.html', pageHtml('home', pages.home));
 
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-  const urls = Object.values(SEO).map(({ path: p }) =>
+  const urls = [...Object.values(SEO).map(({ path: p }) => p), '/vagas'].map(p =>
     `  <url><loc>${SITE}${p}</loc><changefreq>monthly</changefreq><priority>${p === '/' ? '1.0' : '0.8'}</priority></url>`).join('\n');
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   console.log('prerender: sitemap.xml, robots.txt e 404.html gerados');
