@@ -408,7 +408,7 @@ export default function MWSite() {
     return () => window.removeEventListener('popstate', onBack);
   }, []);
 
-  const navigate = (p) => { if (ROUTES[p] && window.location.pathname !== ROUTES[p]) window.history.pushState({}, '', ROUTES[p]); setPage(p); setMobileMenu(false); setQuoteOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); };
+  const navigate = (p) => { if (p === 'vagas') { window.location.href = '/vagas'; return; } if (ROUTES[p] && window.location.pathname !== ROUTES[p]) window.history.pushState({}, '', ROUTES[p]); setPage(p); setMobileMenu(false); setQuoteOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); };
 
   const addToQuote    = (id) => setQuoteItems(prev => { const ex = prev.find(i => i.id === id); return ex ? prev.map(i => i.id === id ? { ...i, qty: i.qty+1 } : i) : [...prev,{id,qty:1}]; });
   const removeFromQuote = (id) => setQuoteItems(prev => prev.filter(i => i.id !== id));
@@ -480,7 +480,7 @@ export default function MWSite() {
 function Navbar({ page, navigate, mobileMenu, setMobileMenu, totalItems, setQuoteOpen }) {
   const links = [
     {id:'home',label:'Início'},{id:'about',label:'Sobre'},
-    {id:'products',label:'Produtos'},{id:'team',label:'Equipe'},{id:'contact',label:'Contato'},
+    {id:'products',label:'Produtos'},{id:'team',label:'Equipe'},{id:'vagas',label:'Trabalhe Conosco'},{id:'contact',label:'Contato'},
   ];
   return (
     <>
@@ -984,7 +984,7 @@ function TeamPage() {
           <SectionHeader kicker="Nossa Equipe" title={<>Profissionais que <span style={{ color:t.teal }}>entendem do assunto</span></>} subtitle="Nossa equipe é formada por Médicos Veterinários." />
         </div>
       </section>
-      <section style={{ padding:'0 24px 96px' }}>
+      <section style={{ padding:'0 24px 48px' }}>
         <div style={{ maxWidth:'1280px',margin:'0 auto' }}>
           {tiers.map(tier => {
             const members = TEAM.filter(m=>m.tier===tier);
@@ -1000,6 +1000,12 @@ function TeamPage() {
               </div>
             );
           })}
+        </div>
+      </section>
+      <section style={{ padding:'0 24px 96px' }}>
+        <div style={{ maxWidth:'1280px',margin:'0 auto',padding:'48px 32px',borderRadius:'20px',background:t.surface,border:`1px solid ${t.divider}`,textAlign:'center' }}>
+          <SectionHeader kicker="Trabalhe Conosco" title={<>Quer fazer parte do <span style={{ color:t.teal }}>nosso time</span>?</>} subtitle="Veja as vagas abertas e envie seu currículo pelo nosso portal." />
+          <div style={{ marginTop:'8px' }}><PrimaryBtn onClick={() => { window.location.href = '/vagas'; }}>Ver vagas abertas →</PrimaryBtn></div>
         </div>
       </section>
     </>
@@ -1251,7 +1257,7 @@ function WhatsAppFloat() {
 }
 
 function SiteFooter({ navigate }) {
-  const links = [{label:'Início',id:'home'},{label:'Sobre',id:'about'},{label:'Produtos',id:'products'},{label:'Equipe',id:'team'},{label:'Contato',id:'contact'}];
+  const links = [{label:'Início',id:'home'},{label:'Sobre',id:'about'},{label:'Produtos',id:'products'},{label:'Equipe',id:'team'},{label:'Trabalhe Conosco',id:'vagas'},{label:'Contato',id:'contact'}];
   return (
     <footer style={{ padding:'64px 24px 32px',borderTop:`1px solid ${t.divider}` }}>
       <div style={{ maxWidth:'1280px',margin:'0 auto' }}>
